@@ -2,6 +2,7 @@
   "name": "node-express-jwt-auth",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "app.js",
   "dependencies": {
     "ejs": "^3.1.3",
@@ -17,7 +18,7 @@
     "url": "git+https://github.com/iamshaunjp/node-express-jwt-auth.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kamran Shakib",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/iamshaunjp/node-express-jwt-auth/issues"
