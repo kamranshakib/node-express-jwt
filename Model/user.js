@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 
 const DBURL = 'mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-mongoose.connect(DBURL)
+mongoose.connect(DBURL,{
+  dbName: "userAuth",
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 .then(()=> console.log('Connected to Database'))
 .catch((err)=> console.log(err.message))
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({ 
     email: {
         type: String,
         required: [true, 'please enter your email'],
