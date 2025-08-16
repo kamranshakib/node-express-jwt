@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from 'validator'
 
 const DBURL = 'mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
@@ -14,7 +15,8 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'please enter your email'],
-        unique: [true, 'enter another email address']
+        unique: [true, 'enter another email address'],
+        validate: [validator.isEmail,'enter a valid email']
     },
     password: {
         type: String,
