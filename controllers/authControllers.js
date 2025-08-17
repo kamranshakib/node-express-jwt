@@ -22,8 +22,6 @@ const ErrorHundle = (err)=>{
     return errors;
 }
 
-
-
  export const login = (req,res)=>{
     res.render('login')
 }

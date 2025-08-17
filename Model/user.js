@@ -27,5 +27,20 @@ const userSchema = new mongoose.Schema({
 
 })
 
+    // Befor save and create
+userSchema.pre('save',function(next){
+    console.log('user about created and saved',this)
+    next()
+
+})
+
+    // After save and created
+userSchema.post('save',function(doc,next){
+    console.log('new user was created and saved.',doc)
+
+    next();
+
+})
+
 const User = mongoose.model('user-auth',userSchema);
 export default User;
