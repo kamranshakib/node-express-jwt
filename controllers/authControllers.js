@@ -7,6 +7,7 @@ const ErrorHundle = (err)=>{
     console.log(err.message, err.code)
 
     let errors = {email:'',password: ''};
+    
     //duplicate errors code
     if(err.code ===11000){
         errors.email = 'that email is aleady registered'
