@@ -15,26 +15,8 @@ app.use(authRoutes);
 // view engine
 app.set("view engine", "ejs");
 
-// routes
+// routes 
 app.get("/", (req, res) => res.render("home"));
-
-
-
-app.get('/set-cookies',(req,res)=>{
-
-  res.cookie('newUser',true,{maxAge: 100*60*60,httpOnly:true})
-  res.cookie('isEmployee',true)
-  res.send('get cookies')
-})
-
-app.get('/get-cookie',(req,res)=>{
-  const cookies = req.cookies;
-  res.json(cookies)
-})
-
-
-
-
 
 app.listen(3000, () => {
   console.log("localhost 3000");

@@ -3,11 +3,11 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 
 const DBURL =
-  "mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-mongoose
+  "mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/userAuth?retryWrites=true&w=majority&appName=Cluster0";
+   
+mongoose 
   .connect(DBURL, {
-    dbName: "userAuth",
+
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
