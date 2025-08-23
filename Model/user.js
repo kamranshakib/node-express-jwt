@@ -6,11 +6,11 @@ const DBURL =
   "mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/userAuth?retryWrites=true&w=majority&appName=Cluster0";
    
 mongoose 
-  .connect(DBURL, {
+  .connect(DBURL, { 
 
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
+  }) 
   .then(() => console.log("Connected to Database"))
   .catch((err) => console.log(err.message));
 
