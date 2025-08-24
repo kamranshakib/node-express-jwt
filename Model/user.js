@@ -4,13 +4,12 @@ import bcrypt from "bcrypt";
 
 const DBURL =
   "mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/userAuth?retryWrites=true&w=majority&appName=Cluster0";
-   
-mongoose 
-  .connect(DBURL, { 
 
+mongoose
+  .connect(DBURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }) 
+  })
   .then(() => console.log("Connected to Database"))
   .catch((err) => console.log(err.message));
 
@@ -35,13 +34,20 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+// cheak login email and passoword
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error("incorrect password");
+  }
 
-// After save and created
-userSchema.post("save", function (doc, next) {
-  console.log("new user was created and saved.", doc);
-
-  next();
-});
+  throw Error("incorrect email ");
+};
 
 const User = mongoose.model("user-auth", userSchema);
 export default User;
+  

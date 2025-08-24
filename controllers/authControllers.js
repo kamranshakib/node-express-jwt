@@ -32,15 +32,29 @@ const ErrorHundle = (err) => {
 };
 
 export const login = (req, res) => {
-  res.render("login");
+ res.render('login')
 };
 
 export const signup = (req, res) => {
   res.render("signup");
 };
 
-export const login_post = (req, res) => {
-  res.send("new login");
+export const login_post = async(req, res) => {
+   const {email , password} = req.body;
+
+    try {
+     
+      const user = await User.login(email,password) 
+      if(user){
+        res.status(200).json({user: user._id})
+      }
+      
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({error: error.message})
+      
+    }
+
 };
 
 export const signup_post = async (req, res) => {
