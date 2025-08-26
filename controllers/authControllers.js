@@ -2,7 +2,7 @@ import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
 
 // jsonwebtoekn function
-const maxAge = "10s";
+const maxAge = 3 * 24 * 60 * 60 ;
 const createToken = (id) => {
   return jwt.sign({ id }, "KB it means Kamran Bahar", { expiresIn: maxAge });
 };
@@ -61,7 +61,7 @@ export const signup_post = async (req, res) => {
     const { email, password } = await req.body;
     const newUser = await User.create({ email, password });
     const token = createToken(newUser._id);
-    res.cookie("jwt", token, { httpOnly: true });
+    res.cookie("jwt", token, { httpOnly: true,maxAge: maxAge * 1000 });
     res.status(200).json({
       user: newUser,
     });
