@@ -2,9 +2,9 @@ import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
 
 // jsonwebtoekn function
-const maxAge = 3 * 24 * 60 * 60 ;
+const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, "KB it means Kamran Bahar", { expiresIn: maxAge });
+  return jwt.sign({ id }, "KB it means Kamran Bahar", { expiresIn: maxAge  });
 };
 
 // error hundling function
@@ -47,9 +47,10 @@ export const login_post = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
-    if (user) {
+    const token = createToken(user._id);
+     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
       res.status(200).json({ user: user._id });
-    }
+    
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(400).json({ errors });
@@ -61,12 +62,19 @@ export const signup_post = async (req, res) => {
     const { email, password } = await req.body;
     const newUser = await User.create({ email, password });
     const token = createToken(newUser._id);
-    res.cookie("jwt", token, { httpOnly: true,maxAge: maxAge * 1000 });
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({
-      user: newUser,
+      user: newUser._id
     });
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(500).json({ errors });
   }
 };
+
+
+
+export const logout = (req,res)=>{
+  res.cookie('jwt','',{maxAge: 1})
+  res.redirect('/')
+}

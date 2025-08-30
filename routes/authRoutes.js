@@ -7,6 +7,7 @@ router.get('/signup',authControllers.signup)
 router.post('/signup',authControllers.signup_post)
 router.get('/login',authControllers.login)
 router.post('/login',authControllers.login_post)
+router.get('/logout',authControllers.logout)
 
 
 export default router;
