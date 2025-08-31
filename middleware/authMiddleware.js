@@ -23,10 +23,7 @@ export const CheakUser = (req, res, next) => {
 
   try {
     if (token) {
-      jwt.verify(
-        token,
-        "KB it means Kamran Bahar",
-        async (err, decodedToken) => {
+       jwt.verify(token,"KB it means Kamran Bahar", async (err, decodedToken) => {
           if (err) {
             res.locals.user = null;
             next();
