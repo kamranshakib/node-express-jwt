@@ -17,6 +17,7 @@ app.use(authRoutes);
 app.set("view engine", "ejs");
 
 // routes
+app.get('*',requireAuth.CheakUser)
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", requireAuth.requireAuth, (req, res) =>
   res.render("smoothies")
