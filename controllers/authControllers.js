@@ -1,10 +1,12 @@
 import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv'
+dotenv.config()
 
 // jsonwebtoekn function
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, "KB it means Kamran Bahar", { expiresIn: maxAge  });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge  });
 };
 
 // error hundling function

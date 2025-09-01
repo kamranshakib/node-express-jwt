@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
 import User from "../Model/user.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, "KB it means Kamran Bahar", (err, decoded) => {
+    jwt.verify(token,process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         res.redirect("/login");
       } else {
@@ -23,7 +25,7 @@ export const CheakUser = (req, res, next) => {
 
   try {
     if (token) {
-       jwt.verify(token,"KB it means Kamran Bahar", async (err, decodedToken) => {
+       jwt.verify(token,process.env.JWT_SECRET, async (err, decodedToken) => {
           if (err) {
             res.locals.user = null;
             next();

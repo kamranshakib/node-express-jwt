@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
 
-const DBURL =
-  "mongodb+srv://kamranshakib371:ZC7e8K4dAHxwHgE@cluster0.zztg2xz.mongodb.net/userAuth?retryWrites=true&w=majority&appName=Cluster0";
+const DBURL =  process.env.DB_URL
 
 mongoose
   .connect(DBURL, {
