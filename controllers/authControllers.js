@@ -77,6 +77,12 @@ export const signup_post = async (req, res) => {
 
 
 export const logout = (req,res)=>{
-  res.cookie('jwt','',{maxAge: 1})
+  // res.cookie('jwt','',{maxAge: 1})
+   res.cookie("jwt", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None",
+    expires: new Date(0),
+  });
   res.redirect('/')
 }
