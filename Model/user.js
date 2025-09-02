@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
 
-const DBURL =  process.env.DB_URL
+const DBURL = process.env.DB_URL;
 
 mongoose
   .connect(DBURL, {
@@ -51,4 +51,3 @@ userSchema.statics.login = async function (email, password) {
 
 const User = mongoose.model("user-auth", userSchema);
 export default User;
-  

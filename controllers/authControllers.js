@@ -1,12 +1,12 @@
 import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 // jsonwebtoekn function
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge  });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge });
 };
 
 // error hundling function
@@ -50,9 +50,13 @@ export const login_post = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-     res.cookie("jwt", token, { httpOnly: true,secure: process.env.NODE_ENV === "production", sameSite: "None",expires: new Date(Date.now() + maxAge * 1000) });
-      res.status(200).json({ user: user._id });
-    
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+      expires: new Date(Date.now() + maxAge * 1000),
+    });
+    res.status(200).json({ user: user._id });
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(400).json({ errors });
@@ -64,9 +68,14 @@ export const signup_post = async (req, res) => {
     const { email, password } = await req.body;
     const newUser = await User.create({ email, password });
     const token = createToken(newUser._id);
-      res.cookie("jwt", token, { httpOnly: true,secure: process.env.NODE_ENV === "production", sameSite: "None",expires: new Date(Date.now() + maxAge * 1000) });
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+      expires: new Date(Date.now() + maxAge * 1000),
+    });
     res.status(200).json({
-      user: newUser._id
+      user: newUser._id,
     });
   } catch (err) {
     const errors = ErrorHundle(err);
@@ -74,15 +83,13 @@ export const signup_post = async (req, res) => {
   }
 };
 
-
-
-export const logout = (req,res)=>{
+export const logout = (req, res) => {
   // res.cookie('jwt','',{maxAge: 1})
-   res.cookie("jwt", "", {
+  res.cookie("jwt", "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "None",
     expires: new Date(0),
   });
-  res.redirect('/')
-}
+  res.redirect("/");
+};

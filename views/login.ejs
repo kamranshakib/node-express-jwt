@@ -13,7 +13,7 @@
 </form>
 
 <script>
- const form = document.querySelector("form");
+  const form = document.querySelector("form");
   const emailError = document.querySelector(".email.error");
   const passwordError = document.querySelector(".password.error");
 
@@ -40,8 +40,8 @@
         emailError.textContent = data.errors.email;
         passwordError.textContent = data.errors.password;
       }
-      if(data.user){
-        location.assign('/')
+      if (data.user) {
+        location.assign("/");
       }
     } catch (error) {
       console.log(error);
