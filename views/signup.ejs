@@ -1,16 +1,38 @@
 <%- include('partials/header'); -%>
 
-<form>
-  <h2>Sign up</h2>
-  <label for="email">Email</label>
-  <input type="text" name="email" required />
-  <div class="email error"></div>
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-100 via-white to-pink-50 px-4">
+  <form class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md space-y-6 border border-pink-100">
+    <h2 class="text-2xl font-bold text-center text-pink-600">Sign up</h2>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" required />
-  <div class="password error"></div>
-  <button>Sign up</button>
-</form>
+    <!-- Email -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <input type="text" name="email" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" />
+      <div class="email error text-sm text-red-500 mt-1"></div>
+    </div>
+
+    <!-- Password -->
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+      <input type="password" name="password" required
+        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" />
+      <div class="password error text-sm text-red-500 mt-1"></div>
+    </div>
+
+    <!-- Button -->
+    <button
+      class="w-full bg-pink-500 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-pink-600 active:scale-95 transition">
+      Sign up
+    </button>
+
+    <!-- Login link -->
+    <p class="text-sm text-gray-600 text-center">
+      Already have an account?
+      <a href="/login" class="text-pink-500 hover:underline">Log in</a>
+    </p>
+  </form>
+</div>
 
 <script>
   const form = document.querySelector("form");
@@ -22,9 +44,6 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    //get the values of email and password
-
     const email = form.email.value;
     const password = form.password.value;
 
@@ -37,8 +56,8 @@
 
       const data = await res.json();
       if (data.errors) {
-        emailError.textContent = data.errors.email;
-        passwordError.textContent = data.errors.password;
+        emailError.textContent = data.errors.email || "";
+        passwordError.textContent = data.errors.password || "";
       }
       if (data.user) {
         location.assign("/");
