@@ -53,14 +53,14 @@ export const login_post = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
-      expires: new Date(Date.now() + maxAge * 1000),
+       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      expiresIn: new Date(Date.now() + maxAge * 1000),
     });
     res.status(200).json({ user: user._id });
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(400).json({ errors });
-  }
+  } 
 };
 
 export const signup_post = async (req, res) => {
@@ -71,8 +71,8 @@ export const signup_post = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
-      expires: new Date(Date.now() + maxAge * 1000),
+       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      expiresIn: new Date(Date.now() + maxAge * 1000),
     });
     res.status(200).json({
       user: newUser._id,
@@ -88,8 +88,8 @@ export const logout = (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "None",
-    expires: new Date(0),
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    expiresIn: new Date(0),
   });
   res.redirect("/");
 };
