@@ -18,7 +18,7 @@ const ErrorHundle = (err) => {
   if (err.message === "incorrect password") {
     errors.password = " that password is incorrect";
   }
-
+ 
   if (err.message === "incorrect email") {
     errors.email = " that email in not registred";
   }
