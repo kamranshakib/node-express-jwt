@@ -1,7 +1,7 @@
 import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config(); 
 
 // jsonwebtoekn function
 const maxAge = 3 * 24 * 60 * 60;
@@ -94,7 +94,3 @@ export const logout = (req, res) => {
   res.redirect("/");
 };
 
-
-export const adminPage = (req,res)=>{
-  res.render("admin")
-}
