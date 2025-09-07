@@ -8,4 +8,6 @@ router.get("/login", authControllers.login);
 router.post("/login", authControllers.login_post);
 router.get("/logout", authControllers.logout);
 
+router.get("/admin",authControllers.adminPage)
+
 export default router;

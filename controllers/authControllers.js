@@ -93,3 +93,8 @@ export const logout = (req, res) => {
   });
   res.redirect("/");
 };
+
+
+export const adminPage = (req,res)=>{
+  res.render("admin")
+}
