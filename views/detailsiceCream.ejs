@@ -1,20 +1,45 @@
 <%- include('partials/header'); -%>
 
-<div class="max-w-4xl mx-auto px-4 py-10">
-  <div class="bg-white shadow-2xl rounded-2xl overflow-hidden">
-    <img src="/<%= ice.image %>" alt="<%= ice.name %>" class="w-full h-96 object-cover">
-
-    <div class="p-6">
-      <h2 class="text-3xl font-bold text-gray-800"><%= ice.name %></h2>
-      <p class="text-lg text-gray-600 mt-2"><strong>Flavor:</strong> <%= ice.Flavor %></p>
-      <p class="mt-4 text-gray-700"><strong>Description:</strong> <%= ice.Description %></p>
-      <p class="mt-4 text-2xl font-semibold text-green-600">$<%= ice.Price %></p>
-
-      <a href="/smoothies" class="inline-block mt-6 px-5 py-2 bg-gradient-to-r from-pink-400 to-red-500 text-white font-medium rounded-xl shadow-md hover:scale-105 transition-transform">
-        Back to Menu
-      </a>
+<div class="max-w-5xl mx-auto px-4 py-10">
+  <div class="bg-white shadow-xl rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    
+    <!-- Image Section -->
+    <div class="flex items-center justify-center bg-gray-50 p-6">
+      <img src="/<%= ice.image %>" 
+           alt="<%= ice.name %>"  
+           class="w-full max-w-md h-80 object-cover rounded-2xl shadow-lg transition-transform duration-500 hover:scale-105">
     </div>
+
+    <!-- Details Section -->
+    <div class="p-8 flex flex-col justify-center">
+      <h2 class="text-4xl font-extrabold text-gray-800 mb-4"><%= ice.name %></h2>
+      <p class="text-lg text-pink-600 font-medium mb-2"> Flavor: <%= ice.Flavor %></p>
+      <p class="text-gray-700 leading-relaxed mb-4"><span class="font-semibold">Description:</span> <%= ice.Description %></p>
+      <p class="text-3xl font-bold text-green-600 mb-8">$<%= ice.Price %></p>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <!-- Order Button -->
+        <button onclick="orderNotReady()" 
+          class="flex-1 px-6 py-3 bg-gradient-to-r from-pink-400 to-red-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:shadow-lg transition-transform">
+          Order Now
+        </button>
+
+        <!-- Back Button -->
+        <a href="/smoothies" 
+           class="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:shadow-lg transition-transform text-center">
+          Back to Menu
+        </a>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<script>
+  function orderNotReady() {
+    alert("🚧 این بخش هنوز ساخته نشده است، بزودی اضافه خواهد شد!");
+  }
+</script>
 
 <%- include('partials/footer'); -%>
