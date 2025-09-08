@@ -1,0 +1,20 @@
+<%- include('partials/header'); -%>
+
+<div class="max-w-4xl mx-auto px-4 py-10">
+  <div class="bg-white shadow-2xl rounded-2xl overflow-hidden">
+    <img src="/<%= ice.image %>" alt="<%= ice.name %>" class="w-full h-96 object-cover">
+
+    <div class="p-6">
+      <h2 class="text-3xl font-bold text-gray-800"><%= ice.name %></h2>
+      <p class="text-lg text-gray-600 mt-2"><strong>Flavor:</strong> <%= ice.Flavor %></p>
+      <p class="mt-4 text-gray-700"><strong>Description:</strong> <%= ice.Description %></p>
+      <p class="mt-4 text-2xl font-semibold text-green-600">$<%= ice.Price %></p>
+
+      <a href="/smoothies" class="inline-block mt-6 px-5 py-2 bg-gradient-to-r from-pink-400 to-red-500 text-white font-medium rounded-xl shadow-md hover:scale-105 transition-transform">
+        Back to Menu
+      </a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer'); -%>

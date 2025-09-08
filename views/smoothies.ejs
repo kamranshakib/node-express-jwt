@@ -1,26 +1,34 @@
 <%- include('partials/header'); -%>
 
 <div class="max-w-7xl mx-auto px-4 py-10">
-  <h2 class="text-4xl font-extrabold text-center mb-10 text-gray-800">🍹 Ice Creams</h2>
-  
+  <h2 class="text-4xl font-extrabold text-center mb-10 text-gray-800">
+    🍹 Ice Creams
+  </h2>
+
   <ul class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
     <% iceCream.forEach(ice => { %>
-      <!-- Ice Cream Card -->
-      <li class="recipe bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden transform hover:-translate-y-1 hover:scale-105">
-        <div class="overflow-hidden rounded-t-3xl">
-          <img src="/<%= ice.image %>" 
-               alt="<%= ice.name %>" 
-               class="w-full h-60 object-cover transition-transform duration-500 hover:scale-110 hover:rotate-1">
-        </div>
-        <div class="p-6">
-          <h4 class="text-2xl font-bold text-gray-800 mb-2"><%= ice.name %></h4>
-          <p class="text-pink-500 font-medium mb-1"><%= ice.Flavor %></p>
-          <p class="text-green-600 font-semibold text-lg mb-4">$<%= ice.Price %></p>
-          <button class="mt-2 w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:shadow-lg transition-transform">
-            Details
-          </button>
-        </div>
-      </li>
+    <!-- Ice Cream Card -->
+    <li
+      class="recipe bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden transform hover:-translate-y-1 hover:scale-105">
+      <div class="overflow-hidden rounded-t-3xl">
+        <img
+          src="/<%= ice.image %>"
+          alt="<%= ice.name %>"
+          class="w-full h-60 object-cover transition-transform duration-500 hover:scale-110 hover:rotate-1" />
+      </div>
+      <div class="p-6">
+        <h4 class="text-2xl font-bold text-gray-800 mb-2"><%= ice.name %></h4>
+        <p class="text-pink-500 font-medium mb-1"><%= ice.Flavor %></p>
+        <p class="text-green-600 font-semibold text-lg mb-4">
+          $<%= ice.Price %>
+        </p>
+        <a
+          href="/icecream/<%= ice._id %>"
+          class="mt-2 block text-center w-full py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:shadow-lg transition-transform">
+          Details
+        </a>
+      </div>
+    </li>
     <% }) %>
   </ul>
 </div>
