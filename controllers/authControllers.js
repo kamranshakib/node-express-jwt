@@ -20,7 +20,7 @@ const ErrorHundle = (err) => {
   }
  
   if (err.message === "incorrect email") {
-    errors.email = " that email in not registred";
+    errors.email = " That email is not registered";
   }
 
   //duplicate errors code
@@ -62,21 +62,29 @@ export const login_post = async (req, res) => {
     res.status(400).json({ errors });
   } 
 };
-
 export const signup_post = async (req, res) => {
   try {
-    const { email, password } = await req.body;
+    const { email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ errors: { email: "This email is already registered!" } });
+    }
+
     const newUser = await User.create({ email, password });
+
+   
     const token = createToken(newUser._id);
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      expiresIn: new Date(Date.now() + maxAge * 1000),
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      expires: new Date(Date.now() + maxAge * 1000),
     });
-    res.status(200).json({
-      user: newUser._id,
-    });
+
+    // 5. پاسخ موفق
+    res.status(200).json({ user: newUser._id });
+
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(500).json({ errors });

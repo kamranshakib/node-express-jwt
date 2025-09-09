@@ -19,23 +19,30 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "please enter your email"],
     unique: [true, "enter another email address"],
-    validate: [validator.isEmail, "enter a valid email"],
+
+    validate: {
+      validator: function (v) {
+        // باید ایمیل درست باشه و آخرش @gmail.com داشته باشه
+        return validator.isEmail(v) && v.endsWith("@gmail.com");
+      },
+      message: (props) => `${props.value} is not a valid Gmail address!`,
+    },
   },
   password: {
     type: String,
     required: [true, "please enter your password."],
-    minlength: [8, "your passwoed is small then 8 char.."],
+    minlength: [8, "your password is shorter than 8 characters."],
   },
 });
 
-// Befor save and create
+// Before save and create
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
-
   next();
 });
-// cheak login email and passoword
+
+// Check login email and password
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
   if (user) {
@@ -45,7 +52,6 @@ userSchema.statics.login = async function (email, password) {
     }
     throw Error("incorrect password");
   }
-
   throw Error("incorrect email");
 };
 
