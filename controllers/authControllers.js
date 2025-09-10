@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config(); 
 
 // jsonwebtoekn function
-const maxAge = 3 * 24 * 60 * 60;
+const maxAge = 20 * 24 * 60 * 60;
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge });
 };
