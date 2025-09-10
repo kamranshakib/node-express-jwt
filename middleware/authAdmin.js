@@ -17,7 +17,7 @@ export const requireAdmin = (req, res, next) => {
         if (user && user.email === "Admin@gmail.com") {
          
           res.locals.user = user;
-          next();
+          next(); 
         } else {
           return res.render("404") 
         }

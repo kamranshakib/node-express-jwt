@@ -6,7 +6,6 @@
   <title>Kami Smoothie</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Tailwind config برای حالت dark
     tailwind.config = {
       darkMode: 'class'
     }
@@ -14,130 +13,132 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
 
-  <!-- Navbar -->
-  <nav class="bg-white dark:bg-gray-800 shadow-md relative">
-    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-      
-      <!-- Logo -->
-      <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent drop-shadow-lg transform transition duration-300 hover:scale-105">
-        <a href="/">Kami Smoothie</a>
-      </h1>
+<!-- Navbar -->
+<nav class="bg-white dark:bg-gray-800 shadow-md relative">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
 
-      <!-- Desktop Menu -->
-      <ul class="hidden md:flex items-center space-x-6 font-medium">
-        <% if (user) { %>
-          <li>Welcome, <span class="font-semibold text-pink-600"><%= user.email %></span></li>
+    <!-- Logo -->
+    <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-500 
+               bg-clip-text text-transparent drop-shadow-lg transform transition duration-300 hover:scale-105">
+      <a href="/">Kami Smoothie</a>
+    </h1>
 
-          <% if (user.email === "Admin@gmail.com") { %>
-            <li>
-              <a href="/admin" 
-                 class="px-4 py-2 text-sm bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition">
-                Admin Page
-              </a>
-            </li>
-          <% } %>
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex items-center space-x-6 font-medium">
+      <% if (user) { %>
+        <li>Welcome, <span class="font-semibold text-pink-600"><%= user.email %></span></li>
 
+        <% if (user.email === "Admin@gmail.com") { %>
           <li>
-            <a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a>
-          </li>
-        <% } else { %>
-          <li>
-            <a href="/login" class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">
-              Log in
-            </a>
-          </li>
-          <li>
-            <a href="/signup" class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
-              Sign up
+            <a href="/admin" 
+               class="px-4 py-2 text-sm bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition">
+              Admin Page
             </a>
           </li>
         <% } %>
-        <!-- دکمه تغییر حالت -->
+
         <li>
-          <button id="dark-toggle" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
-            🌙
-          </button>
+          <a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a>
         </li>
-      </ul>
+      <% } else { %>
+        <li>
+          <a href="/login" class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">
+            Log in
+          </a>
+        </li>
+        <li>
+          <a href="/signup" class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
+            Sign up
+          </a>
+        </li>
+      <% } %>
 
-      <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="md:hidden text-gray-700 dark:text-gray-200 focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+      <!-- Desktop Dark toggle -->
+      <li>
+        <button id="dark-toggle" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
+          🌙
+        </button>
+      </li>
+    </ul>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md z-50">
-      <ul class="px-4 pt-2 pb-4 space-y-3 font-medium">
-        <% if (user) { %>
-          <li class="text-center">Welcome, 
-            <span class="font-semibold text-pink-600"><%= user.email %></span>
-          </li>
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="md:hidden text-gray-700 dark:text-gray-200 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
 
-          <% if (user.email == "Admin@gmail.com") { %>
-            <li class="text-center">
-              <a href="/admin" 
-                 class="px-4 py-2 text-sm bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition">
-                Admin Page
-              </a>
-            </li>
-          <% } %>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md z-50">
+    <ul class="px-4 pt-2 pb-4 space-y-3 font-medium">
+      <% if (user) { %>
+        <li class="text-center">Welcome, 
+          <span class="font-semibold text-pink-600"><%= user.email %></span>
+        </li>
 
+        <% if (user.email == "Admin@gmail.com") { %>
           <li class="text-center">
-            <a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a>
-          </li>
-        <% } else { %>
-          <li class="flex justify-center space-x-3">
-            <a href="/login" 
-               class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">
-              Log in
-            </a>
-            <a href="/signup" 
-               class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
-              Sign up
+            <a href="/admin" 
+               class="px-4 py-2 text-sm bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition">
+              Admin Page
             </a>
           </li>
         <% } %>
+
         <li class="text-center">
-          <button id="dark-toggle-mobile" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
-            🌙  
-          </button>
+          <a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a>
         </li>
-      </ul>
-    </div>
-  </nav>
+      <% } else { %>
+        <li class="flex justify-center space-x-3">
+          <a href="/login" 
+             class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">
+            Log in
+          </a>
+          <a href="/signup" 
+             class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
+            Sign up
+          </a>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+</nav>
 
-  <!-- JS -->
-  <script>
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const darkToggle = document.getElementById('dark-toggle');
-    const darkToggleMobile = document.getElementById('dark-toggle-mobile');
-    const html = document.documentElement;
+<!-- Mobile Dark Toggle (floating bottom corner) -->
+<button id="dark-toggle-mobile" 
+        class="fixed bottom-4 right-4 md:hidden z-50 px-4 py-3 bg-gray-200 dark:bg-gray-700 dark:text-yellow-300 rounded-full shadow-lg">
+  🌙
+</button>
 
-    // منو موبایل
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
+<!-- JS -->
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const darkToggle = document.getElementById('dark-toggle');
+  const darkToggleMobile = document.getElementById('dark-toggle-mobile');
+  const html = document.documentElement;
 
-    // تغییر حالت شب/روز
-    function toggleDark() {
-      html.classList.toggle('dark');
-      localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
-    }
+  // Mobile menu toggle
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
 
-    darkToggle?.addEventListener('click', toggleDark);
-    darkToggleMobile?.addEventListener('click', toggleDark);
+  // Dark mode toggle
+  function toggleDark() {
+    html.classList.toggle("dark");
+    localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+  }
 
-    // حالت ذخیره‌شده
-    if (localStorage.getItem("theme") === "dark") {
-      html.classList.add("dark");
-    }
-  </script>
+  darkToggle?.addEventListener('click', toggleDark);
+  darkToggleMobile?.addEventListener('click', toggleDark);
 
+  // Load saved theme
+  if (localStorage.getItem("theme") === "dark") {
+    html.classList.add("dark");
+  }
+</script>
 </body>
 </html>
