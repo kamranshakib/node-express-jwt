@@ -1,24 +1,35 @@
 <%- include('partials/header'); -%>
 
-<header class="bg-gradient-to-r from-pink-100 via-white to-pink-50 py-20">
+<!-- Hero Section -->
+<header class="min-h-screen flex items-center bg-gradient-to-r from-pink-100 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-500">
   <div class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between">
 
     <!-- Headings & Button -->
     <div class="headings text-center md:text-left md:w-1/2 space-y-4 mt-8 md:mt-0">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-pink-600">Smoothie Recipes</h2>
-      <h3 class="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium">Taste the Difference</h3>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-pink-600 dark:text-pink-400">Smoothie Recipes</h2>
+      <h3 class="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium dark:text-gray-300">Taste the Difference</h3>
       <a href="/smoothies" 
-         class="inline-block mt-4 px-6 py-3 bg-pink-500 text-white font-semibold rounded-lg shadow-lg hover:bg-pink-600 transition">
+         class="inline-block mt-4 px-6 py-3 bg-pink-500 text-white font-semibold rounded-lg shadow-lg hover:bg-pink-600 transition dark:bg-pink-600 dark:hover:bg-pink-700">
         View Recipes
       </a>
     </div>
 
     <!-- Image -->
-    <div class="smoothie md:w-1/2 flex justify-center">
-      <img src="/smoothie.png" alt="Smoothie" class="w-64 sm:w-80 md:w-full max-w-sm rounded-2xl shadow-lg" />
-    </div>
+    <div class="smoothie md:w-1/2 flex justify-center md:-mt-16">
+      <!-- Light Mode Image -->
+      <img src="/11880.png" alt="Smoothie"
+           class="w-64 sm:w-80 md:w-full max-w-sm rounded-2xl shadow-lg" />
 
   </div>
 </header>
 
 <%- include('partials/footer'); -%>
+
+<!-- جلوگیری از اسکرول در دسکتاپ -->
+<style>
+  @media (min-width: 1024px) {
+    body {
+      overflow: hidden;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 <%- include('partials/header'); -%>
 
 <div class="max-w-7xl mx-auto px-4 py-10">
-  <h2 class="text-4xl font-extrabold text-center mb-10 text-gray-800">
+  <h2 class="text-4xl font-extrabold text-center mb-10 text-gray-800 dark:text-gray-100">
     🍹 Ice Creams
   </h2>
 
@@ -9,7 +9,7 @@
     <% iceCream.forEach(ice => { %>
     <!-- Ice Cream Card -->
     <li
-      class="recipe bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden transform hover:-translate-y-1 hover:scale-105">
+      class="recipe bg-white dark:bg-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden transform hover:-translate-y-1 hover:scale-105">
       <div class="overflow-hidden rounded-t-3xl">
         <img
           src="/<%= ice.image %>"
@@ -17,7 +17,7 @@
           class="w-full h-60 object-cover transition-transform duration-500 hover:scale-110 hover:rotate-1" />
       </div>
       <div class="p-6">
-        <h4 class="text-2xl font-bold text-gray-800 mb-2"><%= ice.name %></h4>
+        <h4 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2"><%= ice.name %></h4>
         <p class="text-pink-500 font-medium mb-1"><%= ice.Flavor %></p>
         <p class="text-green-600 font-semibold text-lg mb-4">
           $<%= ice.Price %>

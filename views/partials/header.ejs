@@ -5,11 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kami Smoothie</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config برای حالت dark
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md relative">
+  <nav class="bg-white dark:bg-gray-800 shadow-md relative">
     <div class="container mx-auto px-4 py-3 flex items-center justify-between">
       
       <!-- Logo -->
@@ -18,7 +24,7 @@
       </h1>
 
       <!-- Desktop Menu -->
-      <ul class="hidden md:flex items-center space-x-6 text-gray-700 font-medium">
+      <ul class="hidden md:flex items-center space-x-6 font-medium">
         <% if (user) { %>
           <li>Welcome, <span class="font-semibold text-pink-600"><%= user.email %></span></li>
 
@@ -46,10 +52,16 @@
             </a>
           </li>
         <% } %>
+        <!-- دکمه تغییر حالت -->
+        <li>
+          <button id="dark-toggle" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
+            🌙
+          </button>
+        </li>
       </ul>
 
       <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+      <button id="menu-btn" class="md:hidden text-gray-700 dark:text-gray-200 focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -58,9 +70,9 @@
       </button>
     </div>
 
-    <!-- Mobile Menu (overlay) -->
-    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-md z-50">
-      <ul class="px-4 pt-2 pb-4 space-y-3 text-gray-700 font-medium">
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md z-50">
+      <ul class="px-4 pt-2 pb-4 space-y-3 font-medium">
         <% if (user) { %>
           <li class="text-center">Welcome, 
             <span class="font-semibold text-pink-600"><%= user.email %></span>
@@ -90,18 +102,41 @@
             </a>
           </li>
         <% } %>
+        <li class="text-center">
+          <button id="dark-toggle-mobile" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
+            🌙  
+          </button>
+        </li>
       </ul>
     </div>
   </nav>
 
-  <!-- JS for mobile menu toggle -->
+  <!-- JS -->
   <script>
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
+    const darkToggle = document.getElementById('dark-toggle');
+    const darkToggleMobile = document.getElementById('dark-toggle-mobile');
+    const html = document.documentElement;
 
+    // منو موبایل
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+    // تغییر حالت شب/روز
+    function toggleDark() {
+      html.classList.toggle('dark');
+      localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+    }
+
+    darkToggle?.addEventListener('click', toggleDark);
+    darkToggleMobile?.addEventListener('click', toggleDark);
+
+    // حالت ذخیره‌شده
+    if (localStorage.getItem("theme") === "dark") {
+      html.classList.add("dark");
+    }
   </script>
 
 </body>
