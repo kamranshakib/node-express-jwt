@@ -23,7 +23,8 @@ app.get("*", requireAuth.CheakUser);
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", requireAuth.requireAuth, async (req, res) =>{
   try {
-    const iceCream = await ICECREAM.find();
+    const iceCream = await ICECREAM.find().sort({ _id: -1 });
+
     res.render("smoothies",{iceCream})
 
   } catch (error) {
