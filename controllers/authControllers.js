@@ -2,7 +2,7 @@ import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config(); 
-
+ 
 // jsonwebtoekn function
 const maxAge = 20 * 24 * 60 * 60;
 const createToken = (id) => {

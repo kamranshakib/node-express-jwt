@@ -4,25 +4,25 @@ import path from "path";
 export const adminPage = (req, res) => {
   res.render("admin");
 };
-
 export const adminPage_post = async (req, res) => {
   try {
-    const imagePath = req.file ? "uploads/" + req.file.filename : null;
+    const { name, flavor, description, price } = req.body;
 
-    const newIceCream = await ICECREAM.create({
-      name: req.body.name,
-      Flavor: req.body.flavor,
-      Description: req.body.description,
-      Price: req.body.price,
-      image: imagePath,
+    // URL عکس آپلود شده روی Cloudinary
+    const imageUrl = req.file ? req.file.path : null;
+
+    await ICECREAM.create({
+      name,
+      Flavor: flavor,
+      Description: description,
+      Price: price,
+      imageUrl
     });
 
-    console.log("New Ice Cream Added:", newIceCream);
-
-    res.redirect("/"); // بعد از ذخیره به صفحه اصلی میریم
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error while adding ice cream");
+    res.redirect("/admin");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
   }
 };
 
