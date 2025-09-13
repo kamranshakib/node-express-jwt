@@ -31,7 +31,8 @@
             Details
           </a>
 
-          <% if (user && user.email === "Admin@gmail.com") { %>
+        <% if (user && user.email.toLowerCase() === "admin@gmail.com") { %>
+
           <!-- Edit Button -->
           <a
             href="/adminPage_edit/<%= ice._id %>"

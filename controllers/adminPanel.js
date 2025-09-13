@@ -57,11 +57,10 @@ export const adminPage_delete =async (req,res)=>{
   const id = req.params.id;
   try {
     const { name, Flavor, Description, Price } = req.body;
-
-    // اگر فایل جدید آپلود شده باشه، لینک اون رو استفاده کن
-    let imageUrl = req.body.imageUrl; // لینک قدیمی
+    
+    let imageUrl = req.body.imageUrl; 
     if (req.file && req.file.path) {
-      imageUrl = req.file.path; // لینک جدید از Cloudinary
+      imageUrl = req.file.path; 
     }
 
     const updateData = { name, Flavor, Description, Price, imageUrl };
