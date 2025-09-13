@@ -32,7 +32,7 @@ app.get("/smoothies", requireAuth.requireAuth, async (req, res) =>{
      
     
   }
-   
+    
 
 }
   

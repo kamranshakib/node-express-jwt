@@ -7,8 +7,6 @@ export const adminPage = (req, res) => {
 export const adminPage_post = async (req, res) => {
   try {
     const { name, flavor, description, price } = req.body;
-
-    // URL عکس آپلود شده روی Cloudinary
     const imageUrl = req.file ? req.file.path : null;
 
     await ICECREAM.create({
@@ -26,4 +24,54 @@ export const adminPage_post = async (req, res) => {
   }
 };
 
+export const adminPage_delete =async (req,res)=>{
+  const id  = req.params.id;
+  try {
+ const delIce = await ICECREAM.findByIdAndDelete(id);
+    res.redirect('/smoothies')
+    
+  } catch (error) {
+    res.status(400).json(error.message)
+    
+  }
 
+}
+
+ 
+   export const adminPage_edit = async (req,res)=>{
+    const id = req.params.id;
+    try {
+      const editIce = await ICECREAM.findById(id);
+      if(!editIce){
+        res.status(404).json({msg: "that product is not find"})
+      }
+      res.render('editProduct', { editIce })
+      
+    } catch (error) {
+      res.status(404).json(error.message)
+      
+    } 
+   }
+
+   export const adminPage_edit2 = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const { name, Flavor, Description, Price } = req.body;
+
+    // اگر فایل جدید آپلود شده باشه، لینک اون رو استفاده کن
+    let imageUrl = req.body.imageUrl; // لینک قدیمی
+    if (req.file && req.file.path) {
+      imageUrl = req.file.path; // لینک جدید از Cloudinary
+    }
+
+    const updateData = { name, Flavor, Description, Price, imageUrl };
+
+    const editIces = await ICECREAM.findByIdAndUpdate(id, updateData, { new: true });
+    if (!editIces) return res.send('error');
+
+    res.redirect("/smoothies");
+  } catch (error) {
+    console.error(error);
+    res.status(400).send(error.message);
+  }
+};
