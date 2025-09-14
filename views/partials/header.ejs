@@ -16,8 +16,6 @@
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md relative">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-
-    <!-- Logo -->
     <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-500 
                bg-clip-text text-transparent drop-shadow-lg transform transition duration-300 hover:scale-105">
       <a href="/">Kami Smoothie</a>
@@ -27,7 +25,6 @@
     <ul class="hidden md:flex items-center space-x-6 font-medium">
       <% if (user) { %>
         <li>Welcome, <span class="font-semibold text-pink-600"><%= user.email %></span></li>
-
         <% if (user.email === "Admin@gmail.com") { %>
           <li>
             <a href="/admin" 
@@ -36,24 +33,11 @@
             </a>
           </li>
         <% } %>
-
-        <li>
-          <a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a>
-        </li>
+        <li><a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a></li>
       <% } else { %>
-        <li>
-          <a href="/login" class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">
-            Log in
-          </a>
-        </li>
-        <li>
-          <a href="/signup" class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
-            Sign up
-          </a>
-        </li>
+        <li><a href="/login" class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">Log in</a></li>
+        <li><a href="/signup" class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">Sign up</a></li>
       <% } %>
-
-      <!-- Desktop Dark toggle -->
       <li>
         <button id="dark-toggle" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
           🌙
@@ -70,75 +54,88 @@
       </svg>
     </button>
   </div>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md z-50">
-    <ul class="px-4 pt-2 pb-4 space-y-3 font-medium">
-      <% if (user) { %>
-        <li class="text-center">Welcome, 
-          <span class="font-semibold text-pink-600"><%= user.email %></span>
-        </li>
-
-        <% if (user.email == "Admin@gmail.com") { %>
-          <li class="text-center">
-            <a href="/admin" 
-               class="px-4 py-2 text-sm bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition">
-              Admin Page
-            </a>
-          </li>
-        <% } %>
-
-        <li class="text-center">
-          <a href="/logout" class="hover:text-pink-600 transition-colors">Log out</a>
-        </li>
-      <% } else { %>
-        <li class="flex justify-center space-x-3">
-          <a href="/login" 
-             class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">
-            Log in
-          </a>
-          <a href="/signup" 
-             class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
-            Sign up
-          </a>
-        </li>
-      <% } %>
-    </ul>
-  </div>
 </nav>
 
-<!-- Mobile Dark Toggle (floating bottom corner) -->
-<button id="dark-toggle-mobile" 
-        class="fixed bottom-4 right-4 md:hidden z-50 px-4 py-3 bg-gray-200 dark:bg-gray-700 dark:text-yellow-300 rounded-full shadow-lg">
-  🌙
-</button>
+<!-- Overlay -->
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
-<!-- JS -->
+<!-- Mobile Sidebar Menu -->
+<div id="mobile-menu"
+     class="fixed top-0 right-0 h-full w-2/3 sm:w-1/2 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col">
+
+  <!-- Header (Only Email / Guest) -->
+  <div class="p-4 border-b dark:border-gray-700 text-center font-semibold">
+    <% if (user) { %>
+      <%= user.email %>
+    <% } else { %>
+      Guest
+    <% } %>
+  </div>
+
+  <!-- Menu Items -->
+  <ul class="flex-1 flex flex-col justify-center space-y-6 text-center font-medium">
+    <% if (user) { %>
+      <% if (user.email == "Admin@gmail.com") { %>
+        <li><a href="/admin" class="block w-40 mx-auto px-4 py-2 text-sm bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600 transition">Admin Page</a></li>
+      <% } %>
+      <li><a href="/logout" class="block w-40 mx-auto px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">Log out</a></li>
+    <% } else { %>
+      <li><a href="/login" class="block w-40 mx-auto px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">Log in</a></li>
+      <li><a href="/signup" class="block w-40 mx-auto px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">Sign up</a></li>
+    <% } %>
+  </ul>
+
+  <!-- Dark Mode Button -->
+  <button id="dark-toggle-mobile" 
+          class="mx-auto mb-6 px-5 py-2 bg-gray-200 dark:bg-gray-700 dark:text-yellow-300 rounded-full shadow hover:scale-105 transition">
+    🌙 
+  </button>
+</div>
+
 <script>
   const menuBtn = document.getElementById('menu-btn');
+  const closeSidebar = () => {
+    mobileMenu.classList.add('translate-x-full');
+    overlay.classList.add('hidden');
+  };
   const mobileMenu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('overlay');
   const darkToggle = document.getElementById('dark-toggle');
   const darkToggleMobile = document.getElementById('dark-toggle-mobile');
   const html = document.documentElement;
 
-  // Mobile menu toggle
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
+  // تغییر آیکن بر اساس حالت تم
+  function updateIcons() {
+    if (html.classList.contains("dark")) {
+      darkToggle.innerHTML = "☀️"; // Light Mode Icon
+      darkToggleMobile.innerHTML = "☀️";
+    } else {
+      darkToggle.innerHTML = "🌙"; // Dark Mode Icon
+      darkToggleMobile.innerHTML = "🌙";
+    }
+  }
 
-  // Dark mode toggle
+  // Toggle Dark Mode
   function toggleDark() {
     html.classList.toggle("dark");
     localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+    updateIcons();
   }
 
+  // Sidebar open/close
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('translate-x-full');
+    overlay.classList.remove('hidden');
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  // Events
   darkToggle?.addEventListener('click', toggleDark);
   darkToggleMobile?.addEventListener('click', toggleDark);
 
-  // Load saved theme
+  // Load saved theme + icon
   if (localStorage.getItem("theme") === "dark") {
     html.classList.add("dark");
   }
+  updateIcons();
 </script>
-</body>
-</html>

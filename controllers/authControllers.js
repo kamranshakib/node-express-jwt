@@ -82,9 +82,8 @@ export const signup_post = async (req, res) => {
       expires: new Date(Date.now() + maxAge * 1000),
     });
 
-    // 5. پاسخ موفق
     res.status(200).json({ user: newUser._id });
-
+    
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(500).json({ errors });
