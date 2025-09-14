@@ -1,39 +1,70 @@
 <%- include('partials/header'); -%>
 
-<div class="max-w-5xl mx-auto px-4 py-10">
-  <div class="bg-white dark:bg-gray-900 shadow-2xl rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-2 transition-colors duration-300">
-    
-    <!-- Image Section -->
-    <div class="flex items-center justify-center bg-gradient-to-br from-pink-50 to-pink-100 dark:from-gray-800 dark:to-gray-700 p-6">
-      <img src="<%=ice.imageUrl  %>" 
-           alt="<%= ice.name %>"  
-           class="w-full max-w-md h-80 object-cover rounded-2xl shadow-lg transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
+<div class="min-h-screen w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 py-10">
+
+  <!-- Product Card -->
+  <div class="bg-white dark:bg-gray-900 shadow-2xl rounded-3xl overflow-hidden flex flex-col md:flex-row w-full max-w-5xl">
+
+    <!-- Left: Product Image -->
+    <div class="w-full md:w-1/2 relative flex items-center justify-center bg-yellow-50 dark:bg-gray-800">
+      <img src="<%= ice.imageUrl %>" 
+           alt="<%= ice.name %>"
+           class="w-full h-64 md:h-full object-cover md:rounded-l-3xl rounded-t-3xl md:rounded-tr-none">
+
+      <!-- Mobile Back Icon -->
+      <a href="/smoothies" 
+         class="absolute top-3 left-3 md:hidden bg-white dark:bg-gray-700 p-2 rounded-full shadow hover:scale-110 transition z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+
+      <!-- Favorite Button -->
+      <button class="absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow hover:scale-110 transition z-10">
+        ❤️
+      </button>
     </div>
 
-    <!-- Details Section -->
-    <div class="p-10 flex flex-col justify-center">
-      <h2 class="text-4xl font-extrabold text-gray-800 dark:text-gray-100 mb-4 tracking-tight">
-        <%= ice.name %>
-      </h2>
-      <p class="text-lg text-pink-600 dark:text-pink-400 font-semibold mb-3">
-        🍨 Flavor: <%= ice.Flavor %>
-      </p>
-      <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-        <span class="font-semibold">Description:</span> <%= ice.Description %>
-      </p>
-      <p class="text-3xl font-bold text-green-600 dark:text-green-400 mb-8">$<%= ice.Price %></p>
+    <!-- Right: Product Details -->
+    <div class="md:w-1/2 w-full p-6 flex flex-col justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+          <%= ice.name %>
+        </h2>
+        <p class="text-green-600 dark:text-green-400 font-semibold text-xl mb-4">
+          $<%= ice.Price %> / each
+        </p>
+
+        <p class="text-gray-600 dark:text-gray-400 text-base mb-6 leading-relaxed">
+          <%= ice.Description %>
+        </p>
+
+        <!-- Extra Info -->
+        <div class="grid grid-cols-3 text-center text-gray-700 dark:text-gray-300 text-sm mb-6">
+          <div>
+            <p class="font-bold">Flavor</p>
+            <p><%= ice.Flavor %></p>
+          </div>
+          <div>
+            <p class="font-bold">Price</p>
+            <p>$<%= ice.Price %></p>
+          </div>
+          <div>
+            <p class="font-bold">Delivery</p>
+            <p>30 min</p>
+          </div>
+        </div>
+      </div>
 
       <!-- Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4">
-        <!-- Order Button -->
+      <div class="flex flex-col md:flex-row gap-4">
         <button onclick="orderNotReady()" 
-          class="flex-1 px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:shadow-xl hover:from-pink-400 hover:to-red-400 transition-all duration-300">
-          Order Now
+          class="flex-1 px-6 py-3 bg-green-600 text-white font-semibold rounded-full shadow-md hover:bg-green-500 transition text-lg">
+          🛒 Add to Cart
         </button>
 
-        <!-- Back Button -->
         <a href="/smoothies" 
-           class="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:shadow-xl hover:from-yellow-300 hover:to-orange-400 transition-all duration-300 text-center">
+           class="flex-1 px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-center font-semibold rounded-full shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition text-lg hidden md:flex">
           Back to Menu
         </a>
       </div>
@@ -44,8 +75,6 @@
 
 <script>
   function orderNotReady() {
-    alert("🍦 سفارش آنلاین در حال توسعه است. به‌زودی فعال می‌شود!");
+    alert(" سفارش آنلاین در حال توسعه است. به‌زودی فعال می‌شود!");
   }
 </script>
-
-<%- include('partials/footer'); -%>
