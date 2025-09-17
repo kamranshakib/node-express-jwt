@@ -2,27 +2,39 @@
 
 <div class="max-w-7xl mx-auto px-4 py-10">
   <!-- Title -->
-  <h2 class="text-4xl font-extrabold text-center mb-10 text-gray-900 dark:text-gray-100 tracking-tight">
+  <h2
+    class="text-4xl font-extrabold text-center mb-10 text-gray-900 dark:text-gray-100 tracking-tight">
     🍹 Ice Creams
   </h2>
 
   <!-- Search + Sort -->
-  <div class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 mb-8 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+  <div
+    class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 mb-8 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
     <div class="relative flex-1">
-      <input id="searchInput"
-             type="text"
-             placeholder="Search ice creams..."
-             class="w-full px-4 py-2 pl-10 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-500 dark:bg-gray-900 dark:text-white transition"
-      >
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search ice creams..."
+        class="w-full px-4 py-2 pl-10 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-500 dark:bg-gray-900 dark:text-white transition" />
       <span class="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" />
         </svg>
       </span>
     </div>
 
-    <select id="sortSelect"
-            class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-500 dark:bg-gray-900 dark:text-white">
+    <select
+      id="sortSelect"
+      class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-500 dark:bg-gray-900 dark:text-white">
       <option value="">Sort by</option>
       <option value="price-asc">Price: Low → High</option>
       <option value="price-desc">Price: High → Low</option>
@@ -33,132 +45,162 @@
 
   <!-- Product Grid -->
   <% if (!iceCream || iceCream.length === 0) { %>
-    <div class="text-center py-20 text-gray-500">No products found.</div>
+  <div class="text-center py-20 text-gray-500">No products found.</div>
   <% } else { %>
-    <ul id="iceCreamGrid" class="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <% iceCream.forEach(ice => { %>
-        <li 
-          class="recipe hidden bg-white dark:bg-gray-900 rounded-xl shadow-md hover:shadow-xl transform transition-all duration-300 overflow-hidden flex flex-col"
-          data-name="<%= (ice.name || '').toString() %>"
-          data-price="<%= (ice.Price || 0) %>">
-          
-          <!-- Image -->
-          <div class="w-full aspect-[4/3] overflow-hidden rounded-t-xl">
-            <img src="<%= ice.imageUrl %>" alt="<%= ice.name %>" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
-          </div>
+  <ul
+    id="iceCreamGrid"
+    class="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <% iceCream.forEach(ice => { %>
+    <li
+      class="recipe hidden bg-white dark:bg-gray-900 rounded-xl shadow-md hover:shadow-xl transform transition-all duration-300 overflow-hidden flex flex-col"
+      data-name="<%= (ice.name || '').toString() %>"
+      data-price="<%= (ice.Price || 0) %>">
+      <!-- Image -->
+      <div class="w-full aspect-[4/3] overflow-hidden rounded-t-xl">
+        <img
+          src="<%= ice.imageUrl %>"
+          alt="<%= ice.name %>"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+      </div>
 
-          <!-- Content -->
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div>
-              <h4 class="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 truncate"><%= ice.name %></h4>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mb-1 truncate"><%= ice.Flavor %></p>
-              <p class="text-base font-semibold text-yellow-600 dark:text-yellow-400">$<%= ice.Price %></p>
-            </div>
+      <!-- Content -->
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h4
+            class="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 truncate">
+            <%= ice.name %>
+          </h4>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-1 truncate">
+            <%= ice.Flavor %>
+          </p>
+          <p
+            class="text-base font-semibold text-yellow-600 dark:text-yellow-400">
+            $<%= ice.Price %>
+          </p>
+        </div>
 
-            <div class="mt-3 flex flex-col sm:flex-row flex-wrap gap-2">
-              <a href="/icecream/<%= ice._id %>" class="flex-1 text-center py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium rounded-lg shadow hover:opacity-95 transition">
-                Details
-              </a>
+        <div class="mt-3 flex flex-row sm:flex-row flex-wrap gap-2">
+          <a
+            href="/icecream/<%= ice._id %>"
+            class="flex-1 text-center py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium rounded-lg shadow hover:opacity-95 transition">
+            Details
+          </a>
 
-              <% if (user && user.email.toLowerCase() === "admin@gmail.com") { %>
-                <a href="/adminPage_edit/<%= ice._id %>" class="flex-1 text-center py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium rounded-lg hover:opacity-95 transition">
-                  Edit
-                </a>
+          <% if (user && user.email.toLowerCase() === "admin@gmail.com") { %>
+          <a
+            href="/adminPage_edit/<%= ice._id %>"
+            class="flex-1 text-center py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium rounded-lg hover:opacity-95 transition">
+            Edit
+          </a>
 
-                <form action="/adminPage_delete/<%= ice._id %>" method="POST" class="flex-1">
-                  <button type="submit" class="w-full py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium rounded-lg shadow hover:opacity-95 transition"
-                          onclick="return confirm('Are you sure you want to delete <%= ice.name %>?')">
-                    Delete
-                  </button>
-                </form>
-              <% } %>
-            </div>
-          </div>
-        </li>
-      <% }) %>
-    </ul>
+          <form
+            action="/adminPage_delete/<%= ice._id %>"
+            method="POST"
+            class="flex-1">
+            <button
+              type="submit"
+              class="w-full py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium rounded-lg shadow hover:opacity-95 transition"
+              onclick="return confirm('Are you sure you want to delete <%= ice.name %>?')">
+              Delete
+            </button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+    </li>
+    <% }) %>
+  </ul>
 
-    <div id="loader" class="text-center mt-6 text-gray-500 hidden animate-pulse">Loading more products...</div>
+  <div id="loader" class="text-center mt-6 text-gray-500 hidden animate-pulse">
+    Loading more products...
+  </div>
   <% } %>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     const itemsPerLoad = 8;
     let itemsLoaded = 0;
-    const grid = document.getElementById('iceCreamGrid');
-    const loader = document.getElementById('loader');
+    const grid = document.getElementById("iceCreamGrid");
+    const loader = document.getElementById("loader");
 
     if (!grid) return;
 
-    const allItems = Array.from(grid.querySelectorAll('li'));
-    allItems.forEach(item => {
-      item.dataset.match = '1';
-      item.classList.add('hidden');
+    const allItems = Array.from(grid.querySelectorAll("li"));
+    allItems.forEach((item) => {
+      item.dataset.match = "1";
+      item.classList.add("hidden");
     });
 
     function updateLoaderVisibility() {
-      const matched = allItems.filter(i => i.dataset.match === '1');
-      loader && loader.classList.toggle('hidden', itemsLoaded >= matched.length);
+      const matched = allItems.filter((i) => i.dataset.match === "1");
+      loader &&
+        loader.classList.toggle("hidden", itemsLoaded >= matched.length);
     }
 
     function showMoreItems() {
-      const matched = allItems.filter(i => i.dataset.match === '1');
+      const matched = allItems.filter((i) => i.dataset.match === "1");
       if (matched.length === 0) {
-        if (!document.getElementById('no-results')) {
-          const msg = document.createElement('div');
-          msg.id = 'no-results';
-          msg.className = 'col-span-2 text-center py-10 text-gray-500';
-          msg.textContent = 'No products match your search.';
+        if (!document.getElementById("no-results")) {
+          const msg = document.createElement("div");
+          msg.id = "no-results";
+          msg.className = "col-span-2 text-center py-10 text-gray-500";
+          msg.textContent = "No products match your search.";
           grid.parentNode.insertBefore(msg, loader);
         }
-        loader && loader.classList.add('hidden');
+        loader && loader.classList.add("hidden");
         return;
       } else {
-        const existing = document.getElementById('no-results');
+        const existing = document.getElementById("no-results");
         if (existing) existing.remove();
       }
 
       let count = 0;
-      for (let i = itemsLoaded; i < matched.length && count < itemsPerLoad; i++, count++) {
+      for (
+        let i = itemsLoaded;
+        i < matched.length && count < itemsPerLoad;
+        i++, count++
+      ) {
         const it = matched[i];
-        it.classList.remove('hidden');
-        it.classList.add('animate-fadeIn');
-        setTimeout(() => it.classList.remove('animate-fadeIn'), 600);
+        it.classList.remove("hidden");
+        it.classList.add("animate-fadeIn");
+        setTimeout(() => it.classList.remove("animate-fadeIn"), 600);
       }
       itemsLoaded += count;
       updateLoaderVisibility();
     }
 
     function applyFilters() {
-      const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
-      allItems.forEach(item => {
-        const name = (item.dataset.name || '').toLowerCase();
+      const q = (document.getElementById("searchInput").value || "")
+        .trim()
+        .toLowerCase();
+      allItems.forEach((item) => {
+        const name = (item.dataset.name || "").toLowerCase();
         const matchesSearch = !q || name.includes(q);
-        item.dataset.match = matchesSearch ? '1' : '0';
-        item.classList.add('hidden');
+        item.dataset.match = matchesSearch ? "1" : "0";
+        item.classList.add("hidden");
       });
       itemsLoaded = 0;
       showMoreItems();
     }
 
     function applySort() {
-      const sort = document.getElementById('sortSelect').value;
+      const sort = document.getElementById("sortSelect").value;
       if (!sort) return;
       const sorted = allItems.slice();
       sorted.sort((a, b) => {
         const priceA = parseFloat(a.dataset.price) || 0;
         const priceB = parseFloat(b.dataset.price) || 0;
-        const nameA = (a.dataset.name || '').toLowerCase();
-        const nameB = (b.dataset.name || '').toLowerCase();
+        const nameA = (a.dataset.name || "").toLowerCase();
+        const nameB = (b.dataset.name || "").toLowerCase();
 
-        if (sort === 'price-asc') return priceA - priceB;
-        if (sort === 'price-desc') return priceB - priceA;
-        if (sort === 'name-asc') return nameA.localeCompare(nameB);
-        if (sort === 'name-desc') return nameB.localeCompare(nameA);
+        if (sort === "price-asc") return priceA - priceB;
+        if (sort === "price-desc") return priceB - priceA;
+        if (sort === "name-asc") return nameA.localeCompare(nameB);
+        if (sort === "name-desc") return nameB.localeCompare(nameA);
         return 0;
       });
-      sorted.forEach(item => grid.appendChild(item));
+      sorted.forEach((item) => grid.appendChild(item));
     }
 
     function sortThenFilterAndShow() {
@@ -166,20 +208,23 @@
       applyFilters();
     }
 
-    document.getElementById('searchInput').addEventListener('input', () => {
+    document.getElementById("searchInput").addEventListener("input", () => {
       sortThenFilterAndShow();
     });
-    document.getElementById('sortSelect').addEventListener('change', () => {
+    document.getElementById("sortSelect").addEventListener("change", () => {
       applySort();
       itemsLoaded = 0;
       showMoreItems();
     });
 
     let scrollTimer;
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       if (scrollTimer) clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 200
+        ) {
           showMoreItems();
         }
       }, 100);
@@ -191,8 +236,14 @@
 
 <style>
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .animate-fadeIn {
     animation: fadeIn 0.5s ease-in-out;
