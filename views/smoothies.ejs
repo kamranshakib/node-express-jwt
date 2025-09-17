@@ -79,17 +79,17 @@
           </p>
         </div>
 
-        <div class="mt-3 flex flex-row sm:flex-row flex-wrap gap-2">
+        <div class="mt-3 flex flex-col sm:flex-row flex-wrap gap-2">
           <a
             href="/icecream/<%= ice._id %>"
-            class="flex-1 text-center py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium rounded-lg shadow hover:opacity-95 transition">
+            class="flex-1 text-center py-1 px-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium text-sm sm:text-base rounded-lg shadow-sm sm:shadow hover:opacity-95 transition">
             Details
           </a>
 
           <% if (user && user.email.toLowerCase() === "admin@gmail.com") { %>
           <a
             href="/adminPage_edit/<%= ice._id %>"
-            class="flex-1 text-center py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium rounded-lg hover:opacity-95 transition">
+            class="flex-1 text-center py-1 px-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium text-xs sm:text-sm rounded-lg shadow-sm hover:opacity-95 transition">
             Edit
           </a>
 
@@ -99,7 +99,7 @@
             class="flex-1">
             <button
               type="submit"
-              class="w-full py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium rounded-lg shadow hover:opacity-95 transition"
+              class="w-full py-1 px-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium text-xs sm:text-sm rounded-lg shadow-sm hover:opacity-95 transition"
               onclick="return confirm('Are you sure you want to delete <%= ice.name %>?')">
               Delete
             </button>
