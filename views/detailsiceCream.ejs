@@ -20,7 +20,7 @@
       </a>
 
       <!-- Favorite Button -->
-      <button class="absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow hover:scale-110 transition z-10">
+      <button data-id="<%= ice._id %>" class="favorite-btn absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow hover:scale-110 transition z-10">
         ❤️
       </button>
     </div>
@@ -75,9 +75,68 @@
 
   </div>
 </div>
+<div id="toast" class="hidden fixed top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg transition-opacity duration-300 opacity-0"></div>
 
 <script>
   function orderNotReady() {
     alert(" سفارش آنلاین در حال توسعه است. به‌زودی فعال می‌شود!");
   }
+
+
+
+  const favoriteButtons = document.querySelectorAll(".favorite-btn");
+  const toast = document.getElementById("toast");
+
+  // تابع نمایش پیام
+  function showToast(message, type = "success") {
+    toast.textContent = message;
+    toast.classList.remove("hidden", "opacity-0", "bg-red-600", "bg-green-600");
+
+    // رنگ بر اساس نوع پیام
+    if (type === "success") toast.classList.add("bg-green-600");
+    else toast.classList.add("bg-red-600");
+
+    toast.classList.add("opacity-100");
+
+    // بعد ۳ ثانیه پیام محو شود
+    setTimeout(() => {
+      toast.classList.add("opacity-0");
+      setTimeout(() => toast.classList.add("hidden"), 300);
+    }, 3000);
+  }
+
+  favoriteButtons.forEach(button => {
+  button.addEventListener("click", async () => {
+    const productId = button.dataset.id; // همین _id محصول از دیتابیس
+
+    try {
+      const res = await fetch("/favorites/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // 🔥 خیلی مهم
+        body: JSON.stringify({ productId })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        if (data.favorites.some(f => f._id === productId)) {
+          button.classList.add("text-red-500");
+          button.classList.remove("text-gray-400");
+        } else {
+          button.classList.remove("text-red-500");
+          button.classList.add("text-gray-400");
+        }
+        showToast(data.message, "success");
+      } else {
+        showToast(data.message || "مشکلی پیش آمد!", "error");
+      }
+    } catch (err) {
+      showToast("خطای سرور! دوباره تلاش کنید", "error");
+    }
+  });
+});
+
+
+
 </script>

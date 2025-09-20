@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -27,12 +27,22 @@ const userSchema = new mongoose.Schema({
       },
       message: (props) => `${props.value} is not a valid Gmail address!`,
     },
+
   },
   password: {
     type: String,
     required: [true, "please enter your password."],
     minlength: [8, "your password is shorter than 8 characters."],
   },
+
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ICECREAM"
+    }
+  ]
+ 
+
 });
 
 // Before save and create

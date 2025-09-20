@@ -4,6 +4,8 @@ import * as authControllers from "../controllers/authControllers.js";
 import * as adminPanel from "../controllers/adminPanel.js";
 import * as detailsIceCream from "../controllers/iceCreamDetails.js";
 import * as requireAdmin from "../middleware/authAdmin.js";
+import * as favorate from "../controllers/favorates.js"
+import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -13,7 +15,7 @@ router.get("/login", authControllers.login);
 router.post("/login", authControllers.login_post);
 router.get("/logout", authControllers.logout);
  
-// admin page
+// admin page 
 router.get("/admin", requireAdmin.requireAdmin, adminPanel.adminPage);
 router.post("/adminPage_post",requireAdmin.requireAdmin,upload.single("image"),adminPanel.adminPage_post); 
 
@@ -24,5 +26,9 @@ router.post('/adminPage_edit2/:id',upload.single("image"),adminPanel.adminPage_e
 
 // ice creams details
 router.get("/icecream/:id", detailsIceCream.showDetails);
+
+
+// Favorates 
+router.post("/favorites/add",requireAuth, favorate.favorates_add)
 
 export default router;

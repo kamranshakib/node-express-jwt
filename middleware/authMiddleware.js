@@ -10,6 +10,7 @@ export const requireAuth = (req, res, next) => {
       if (err) {
         res.redirect("/login");
       } else {
+        req.user = decoded;
         next();
       }
     });
