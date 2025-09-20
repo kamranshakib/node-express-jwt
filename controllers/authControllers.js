@@ -40,9 +40,9 @@ export const login = (req, res) => {
   res.render("login");
 };
 
-export const signup = (req, res) => {
+export const signup = (req, res) => { 
   res.render("signup");
-};
+}; 
 
 export const login_post = async (req, res) => {
   const { email, password } = req.body;

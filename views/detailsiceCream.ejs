@@ -1,15 +1,15 @@
 <%- include('partials/header'); -%>
 
-<div class="min-h-screen w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 py-10">
+<div class="min-h-screen w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-0 md:px-4 py-0 md:py-10">
 
   <!-- Product Card -->
-  <div class="bg-white dark:bg-gray-900 shadow-2xl rounded-3xl overflow-hidden flex flex-col md:flex-row w-full max-w-5xl">
+  <div class="bg-white dark:bg-gray-900 shadow-2xl rounded-none md:rounded-3xl overflow-hidden flex flex-col md:flex-row w-full md:max-w-5xl">
 
     <!-- Left: Product Image -->
-    <div class="w-full md:w-1/2 relative flex items-center justify-center bg-yellow-50 dark:bg-gray-800">
+    <div class="w-full md:w-1/2 relative flex-shrink-0">
       <img src="<%= ice.imageUrl %>" 
            alt="<%= ice.name %>"
-           class="w-full h-64 md:h-full object-cover md:rounded-l-3xl rounded-t-3xl md:rounded-tr-none">
+           class="block w-full h-64 sm:h-80 md:h-[500px] object-cover md:rounded-l-3xl md:rounded-tr-none">
 
       <!-- Mobile Back Icon -->
       <a href="/smoothies" 
@@ -28,14 +28,14 @@
     <!-- Right: Product Details -->
     <div class="md:w-1/2 w-full p-6 flex flex-col justify-between">
       <div>
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 text-center md:text-left">
           <%= ice.name %>
         </h2>
-        <p class="text-green-600 dark:text-green-400 font-semibold text-xl mb-4">
+        <p class="text-green-600 dark:text-green-400 font-semibold text-xl mb-4 text-center md:text-left">
           $<%= ice.Price %> / each
         </p>
 
-        <p class="text-gray-600 dark:text-gray-400 text-base mb-6 leading-relaxed">
+        <p class="text-gray-600 dark:text-gray-400 text-base mb-6 leading-relaxed text-center md:text-left">
           <%= ice.Description %>
         </p>
 
@@ -63,13 +63,13 @@
           🛒 Add to Cart
         </button>
 
-       <a href="/smoothies" 
-   class="flex flex-1 items-center justify-center px-6 py-3 bg-gray-200 dark:bg-gray-700 
-          text-gray-800 dark:text-gray-200 text-center font-semibold rounded-full shadow 
-          hover:bg-gray-300 dark:hover:bg-gray-600 transition text-lg hidden md:flex">
-  Back to Menu
-</a>
-
+        <!-- big Back to Menu: hidden on mobile -->
+        <a href="/smoothies" 
+           class="hidden md:inline-flex flex-1 items-center justify-center px-6 py-3 bg-gray-200 dark:bg-gray-700 
+           text-gray-800 dark:text-gray-200 text-center font-semibold rounded-full shadow 
+           hover:bg-gray-300 dark:hover:bg-gray-600 transition text-lg">
+          Back to Menu
+        </a>
       </div>
     </div>
 

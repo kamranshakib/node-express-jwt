@@ -38,6 +38,18 @@
         <li><a href="/login" class="px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">Log in</a></li>
         <li><a href="/signup" class="px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">Sign up</a></li>
       <% } %>
+
+      <!-- ❤️ Favorites Button -->
+      <li>
+        <a href="/favorites" class="relative hover:scale-110 transition">
+          ❤️
+          <span id="favorites-count"
+                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+            0
+          </span>
+        </a>
+      </li>
+
       <li>
         <button id="dark-toggle" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-yellow-300">
           🌙
@@ -83,6 +95,17 @@
       <li><a href="/login" class="block w-40 mx-auto px-4 py-2 text-sm border border-pink-500 rounded-lg text-pink-600 hover:bg-pink-50 transition">Log in</a></li>
       <li><a href="/signup" class="block w-40 mx-auto px-4 py-2 text-sm bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">Sign up</a></li>
     <% } %>
+
+    <!-- ❤️ Favorites Button in Mobile Menu -->
+    <li>
+      <a href="/favorites" class="block w-40 mx-auto px-4 py-2 text-sm border border-red-500 rounded-lg text-red-500 hover:bg-red-50 transition">
+        ❤️ Favorites
+        <span id="favorites-count-mobile"
+              class="ml-1 bg-red-500 text-white text-xs rounded-full px-1">
+          0
+        </span>
+      </a>
+    </li>
   </ul>
 
   <!-- Dark Mode Button -->
@@ -139,3 +162,5 @@
   }
   updateIcons();
 </script>
+</body>
+</html>
