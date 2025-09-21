@@ -36,7 +36,7 @@
 
         <!-- Favorites Icon -->
         <li>
-          <a href="/favorites" class="relative flex items-center justify-center hover:text-red-500 transition">
+          <a href="/favorates" class="relative flex items-center justify-center hover:text-red-500 transition">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                        2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 
@@ -45,8 +45,10 @@
                        22 8.5c0 3.78-3.4 6.86-8.55 
                        11.54L12 21.35z"/>
             </svg>
-            <span id="favorites-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+            <% if (typeof favorates !== 'undefined' && favorates.length > 0) { %>
+            <span  id="favorites-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"><%= favorates.length %></span>
           </a>
+          <% } %>
         </li>
 
         <!-- Cart Icon -->
@@ -106,7 +108,7 @@
   <% if (user) { %>
   <div class="flex justify-center items-center gap-6 my-4">
     <!-- Favorites -->
-    <a href="/favorites" class="relative text-gray-700 dark:text-gray-200 hover:text-red-500">
+    <a href="/favorates" class="relative text-gray-700 dark:text-gray-200 hover:text-red-500">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                  2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 

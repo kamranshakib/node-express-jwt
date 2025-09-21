@@ -12,27 +12,40 @@ export const favorates_add = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ success: false, message: "کاربر پیدا نشد!" });
 
-    // تبدیل productId رشته به ObjectId واقعی
+
     const objectId = mongoose.Types.ObjectId.isValid(productId)
       ? new mongoose.Types.ObjectId(productId)
       : null;
 
     if (!objectId) return res.status(400).json({ success: false, message: "شناسه محصول نامعتبر است!" });
 
-    // بررسی وجود محصول در علاقه‌مندی‌ها
+ 
     const index = user.favorites.findIndex(fav => fav.equals(objectId));
 
     if (index === -1) {
-      user.favorites.push(objectId); // فقط ObjectId push کن
+      user.favorites.push(objectId); 
       await user.save();
-      return res.json({ success: true, message: "محصول به علاقه‌مندی‌ها اضافه شد ✅", favorites: user.favorites });
+      return res.json({ success: true, message: "محصول به علاقه‌مندی‌ها اضافه شد ", favorites: user.favorites });
     } else {
       user.favorites.splice(index, 1);
       await user.save();
-      return res.json({ success: true, message: "محصول از علاقه‌مندی‌ها حذف شد ❌", favorites: user.favorites });
+      return res.json({ success: true, message: "محصول از علاقه‌مندی‌ها حذف شد ", favorites: user.favorites });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "خطای سرور" });
+  }
+};
+
+export const get_favorates = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate("favorites");
+    if (!user) {
+      return res.render("404");
+    }
+
+    res.render("favorates", { favorates: user.favorites });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
   }
 };

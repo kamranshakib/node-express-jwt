@@ -87,18 +87,16 @@
   const favoriteButtons = document.querySelectorAll(".favorite-btn");
   const toast = document.getElementById("toast");
 
-  // تابع نمایش پیام
   function showToast(message, type = "success") {
     toast.textContent = message;
     toast.classList.remove("hidden", "opacity-0", "bg-red-600", "bg-green-600");
 
-    // رنگ بر اساس نوع پیام
+  
     if (type === "success") toast.classList.add("bg-green-600");
     else toast.classList.add("bg-red-600");
 
     toast.classList.add("opacity-100");
 
-    // بعد ۳ ثانیه پیام محو شود
     setTimeout(() => {
       toast.classList.add("opacity-0");
       setTimeout(() => toast.classList.add("hidden"), 300);
@@ -107,13 +105,13 @@
 
   favoriteButtons.forEach(button => {
   button.addEventListener("click", async () => {
-    const productId = button.dataset.id; // همین _id محصول از دیتابیس
+    const productId = button.dataset.id; 
 
     try {
       const res = await fetch("/favorites/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // 🔥 خیلی مهم
+        credentials: "include", 
         body: JSON.stringify({ productId })
       });
 

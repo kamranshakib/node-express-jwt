@@ -30,5 +30,6 @@ router.get("/icecream/:id", detailsIceCream.showDetails);
 
 // Favorates 
 router.post("/favorites/add",requireAuth, favorate.favorates_add)
+router.get('/favorates',requireAuth,favorate.get_favorates)
 
 export default router;
