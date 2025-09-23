@@ -17,6 +17,10 @@ app.use(cookieParser());
 app.use(requireAuth.CheakUser);
 app.use(favorates.setFavorites);
 
+app.use((req, res, next) => {
+  console.log("✅ Current User: ", req.user);
+  next();
+});
 // view engine
 app.set("view engine", "ejs");
 

@@ -2,7 +2,7 @@
 import User from '../Model/user.js';
 
 export const setFavorites = async (req, res, next) => {
-  res.locals.favorates = []; // مقدار پیشفرض
+  res.locals.favorates = []; 
   if (req.user) {
     try {
       const user = await User.findById(req.user.id).populate('favorites');

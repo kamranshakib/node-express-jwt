@@ -5,7 +5,7 @@ import * as adminPanel from "../controllers/adminPanel.js";
 import * as detailsIceCream from "../controllers/iceCreamDetails.js";
 import * as requireAdmin from "../middleware/authAdmin.js";
 import * as favorate from "../controllers/favorates.js"
-import { requireAuth } from "../middleware/authMiddleware.js";
+import * as requireAuth  from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -25,11 +25,12 @@ router.post('/adminPage_edit2/:id',upload.single("image"),adminPanel.adminPage_e
 
 
 // ice creams details
-router.get("/icecream/:id", detailsIceCream.showDetails);
+router.get("/icecream/:id",requireAuth.requireAuth, detailsIceCream.showDetails);
 
 
 // Favorates 
-router.post("/favorites/add",requireAuth, favorate.favorates_add)
-router.get('/favorates',requireAuth,favorate.get_favorates)
+// Favorates (toggle)
+router.post("/favorites/add", requireAuth.requireAuth, detailsIceCream.toggleFavorite);
+router.get('/favorates',requireAuth.requireAuth,favorate.get_favorates)
 
 export default router;

@@ -20,8 +20,15 @@
       </a>
 
       <!-- Favorite Button -->
-      <button data-id="<%= ice._id %>" class="favorite-btn absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow hover:scale-110 transition z-10">
-        ❤️
+      <button data-id="<%= ice._id %>" class="favorite-btn absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow hover:scale-110 transition z-50">
+        <!-- Heart SVG -->
+        <svg class="heart-svg h-8 w-8 <%= ice.isFavorite ? 'text-red-500' : 'text-gray-400' %>"
+             xmlns="http://www.w3.org/2000/svg"
+             fill="<%= ice.isFavorite ? 'currentColor' : 'none' %>"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
       </button>
     </div>
 
@@ -63,7 +70,6 @@
           🛒 Add to Cart
         </button>
 
-        <!-- big Back to Menu: hidden on mobile -->
         <a href="/smoothies" 
            class="hidden md:inline-flex flex-1 items-center justify-center px-6 py-3 bg-gray-200 dark:bg-gray-700 
            text-gray-800 dark:text-gray-200 text-center font-semibold rounded-full shadow 
@@ -75,14 +81,14 @@
 
   </div>
 </div>
+
+<!-- Toast -->
 <div id="toast" class="hidden fixed top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg transition-opacity duration-300 opacity-0"></div>
 
 <script>
   function orderNotReady() {
-    alert(" سفارش آنلاین در حال توسعه است. به‌زودی فعال می‌شود!");
+    alert("سفارش آنلاین در حال توسعه است. به‌زودی فعال می‌شود!");
   }
-
-
 
   const favoriteButtons = document.querySelectorAll(".favorite-btn");
   const toast = document.getElementById("toast");
@@ -90,11 +96,7 @@
   function showToast(message, type = "success") {
     toast.textContent = message;
     toast.classList.remove("hidden", "opacity-0", "bg-red-600", "bg-green-600");
-
-  
-    if (type === "success") toast.classList.add("bg-green-600");
-    else toast.classList.add("bg-red-600");
-
+    toast.classList.add(type === "success" ? "bg-green-600" : "bg-red-600");
     toast.classList.add("opacity-100");
 
     setTimeout(() => {
@@ -104,37 +106,39 @@
   }
 
   favoriteButtons.forEach(button => {
-  button.addEventListener("click", async () => {
-    const productId = button.dataset.id; 
+    button.addEventListener("click", async (event) => {
+      const btn = event.currentTarget;
+      const heart = btn.querySelector(".heart-svg");
+      const productId = btn.dataset.id;
 
-    try {
-      const res = await fetch("/favorites/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", 
-        body: JSON.stringify({ productId })
-      });
+      try {
+        const res = await fetch("/favorites/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ productId })
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (data.success) {
-        if (data.favorites.some(f => f._id === productId)) {
-          button.classList.add("text-red-500");
-          button.classList.remove("text-gray-400");
+        if (data.success) {
+          // تغییر رنگ قلب فوراً
+          if (data.isFavorite) {
+            heart.classList.add("text-red-500");
+            heart.classList.remove("text-gray-400");
+            heart.setAttribute("fill", "currentColor");
+          } else {
+            heart.classList.remove("text-red-500");
+            heart.classList.add("text-gray-400");
+            heart.setAttribute("fill", "none");
+          }
+          showToast(data.message, "success");
         } else {
-          button.classList.remove("text-red-500");
-          button.classList.add("text-gray-400");
+          showToast(data.message || "مشکلی پیش آمد!", "error");
         }
-        showToast(data.message, "success");
-      } else {
-        showToast(data.message || "مشکلی پیش آمد!", "error");
+      } catch (err) {
+        showToast("خطای سرور! دوباره تلاش کنید", "error");
       }
-    } catch (err) {
-      showToast("خطای سرور! دوباره تلاش کنید", "error");
-    }
+    });
   });
-});
-
-
-
 </script>

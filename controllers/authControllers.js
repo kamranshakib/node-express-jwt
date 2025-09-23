@@ -54,7 +54,7 @@ export const login_post = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      expiresIn: new Date(Date.now() + maxAge * 1000),
+      expires: new Date(Date.now() + maxAge * 1000),
     });
     res.status(200).json({ user: user._id });
   } catch (err) {

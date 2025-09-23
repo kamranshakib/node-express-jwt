@@ -1,9 +1,9 @@
 import express from "express";
 import User from "../Model/user.js";
-
+ 
 import mongoose from "mongoose";
 
-
+ 
 export const favorates_add = async (req, res) => {
   try {
     const { productId } = req.body;
