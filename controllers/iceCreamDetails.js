@@ -1,5 +1,6 @@
 import ICECREAM from "../Model/Model_ice.js";
 import User from "../Model/user.js";
+import mongoose from "mongoose";
 
 
 export const showDetails = async (req, res) => {
@@ -26,30 +27,51 @@ export const showDetails = async (req, res) => {
 
 export const toggleFavorite = async (req, res) => {
   try {
-    const user = req.user; 
     const { productId } = req.body;
-
-    if (!user) return res.status(401).json({ success: false, message: "Not authenticated" });
-
-    const isAlreadyFavorite = user.favorites.some(fav => fav.toString() === productId);
-
-    if (isAlreadyFavorite) {
-     
-      user.favorites = user.favorites.filter(fav => fav.toString() !== productId);
-    } else {
-     
-      user.favorites.push(productId);
+    if (!productId) {
+      return res.status(400).json({ success: false, message: "شناسه محصول ارسال نشده!" });
     }
 
-    await user.save();
+   
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "کاربر پیدا نشد!" });
+    }
 
-    res.json({
-      success: true,
-      isFavorite: !isAlreadyFavorite,
-      message: !isAlreadyFavorite ? "Added to favorites" : "Removed from favorites"
-    });
+    const objectId = mongoose.Types.ObjectId.isValid(productId)
+      ? new mongoose.Types.ObjectId(productId)
+      : null;
+
+    if (!objectId) {
+      return res.status(400).json({ success: false, message: "شناسه محصول نامعتبر است!" });
+    }
+
+    // پیدا کردن اندیس محصول در علاقه‌مندی‌ها
+    const index = user.favorites.findIndex(fav => fav.equals(objectId));
+
+    if (index === -1) {
+      // اضافه کردن محصول به علاقه‌مندی‌ها
+      user.favorites.push(objectId);
+      await user.save();
+      return res.json({
+        success: true,
+        isFavorite: true,
+        message: "محصول به علاقه‌مندی‌ها اضافه شد",
+        favorites: user.favorites
+      });
+    } else {
+      // حذف محصول از علاقه‌مندی‌ها
+      user.favorites.splice(index, 1);
+      await user.save();
+      return res.json({
+        success: true,
+        isFavorite: false,
+        message: "محصول از علاقه‌مندی‌ها حذف شد",
+        favorites: user.favorites
+      });
+    }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.status(500).json({ success: false, message: "خطای سرور" });
   }
 };
