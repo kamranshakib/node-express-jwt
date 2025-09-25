@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
 
     validate: {
       validator: function (v) {
-        // باید ایمیل درست باشه و آخرش @gmail.com داشته باشه
         return validator.isEmail(v) && v.endsWith("@gmail.com");
       },
       message: (props) => `${props.value} is not a valid Gmail address!`,
@@ -47,10 +46,12 @@ const userSchema = new mongoose.Schema({
 
 // Before save and create
 userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
 
 // Check login email and password
 userSchema.statics.login = async function (email, password) {

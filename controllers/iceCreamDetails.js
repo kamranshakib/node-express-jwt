@@ -46,11 +46,11 @@ export const toggleFavorite = async (req, res) => {
       return res.status(400).json({ success: false, message: "شناسه محصول نامعتبر است!" });
     }
 
-    // پیدا کردن اندیس محصول در علاقه‌مندی‌ها
+    
     const index = user.favorites.findIndex(fav => fav.equals(objectId));
 
     if (index === -1) {
-      // اضافه کردن محصول به علاقه‌مندی‌ها
+      
       user.favorites.push(objectId);
       await user.save();
       return res.json({
@@ -60,7 +60,7 @@ export const toggleFavorite = async (req, res) => {
         favorites: user.favorites
       });
     } else {
-      // حذف محصول از علاقه‌مندی‌ها
+      
       user.favorites.splice(index, 1);
       await user.save();
       return res.json({
