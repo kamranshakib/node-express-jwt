@@ -47,12 +47,12 @@
             </p>
 
             <!-- Remove Button -->
-            <form action="/favorites/add" method="POST" class="mt-auto">
+            <form action="/favorites/delete" method="POST" class="mt-auto">
               <input type="hidden" name="productId" value="<%= product._id %>">
               <button 
                 type="submit"
                 class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-xl shadow transition">
-                Remove from Favorites
+                Remove
               </button>
             </form>
           </div>
