@@ -3,7 +3,6 @@ import User from "../Model/user.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 export const requireAuth = async (req, res, next) => {
   const token = req.cookies.jwt;
   console.log(" Token from Cookie:", token);
@@ -12,24 +11,20 @@ export const requireAuth = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("✅ Decoded Token:", decoded);
 
-   
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
       console.log(" User not found in DB");
       return res.redirect("/login");
     }
 
-    req.user = user; 
-    console.log("✅ req.user set to:", req.user);
+    req.user = user;
+
     next();
   } catch (err) {
-    console.log(" JWT Verify Error:", err.message);
     res.redirect("/login");
   }
 };
-
 
 // cheak user
 

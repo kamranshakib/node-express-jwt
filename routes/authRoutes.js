@@ -28,7 +28,7 @@ router.post('/adminPage_edit2/:id',upload.single("image"),adminPanel.adminPage_e
 router.get("/icecream/:id",requireAuth.requireAuth, detailsIceCream.showDetails);
 
 
-// Favorates 
+
 // Favorates (toggle)
 router.post("/favorites/add", requireAuth.requireAuth,detailsIceCream.toggleFavorite );
 router.get('/favorates',requireAuth.requireAuth,favorate.get_favorates)
