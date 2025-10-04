@@ -20,15 +20,23 @@
       </a>
 
       <!-- Favorite Button -->
-      <button data-id="<%= ice._id %>" class="favorite-btn absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow hover:scale-110 transition z-50">
+      <button data-id="<%= ice._id %>" 
+        class="favorite-btn absolute top-3 right-3 md:top-4 md:right-4 bg-white dark:bg-gray-700 p-3 rounded-full shadow-lg hover:scale-110 transition z-50 group">
         <!-- Heart SVG -->
-        <svg class="heart-svg h-8 w-8 <%= ice.isFavorite ? 'text-red-500' : 'text-gray-400' %>"
+        <svg class="heart-svg h-8 w-8 transition-all duration-300 ease-in-out 
+             <%= ice.isFavorite ? 'text-pink-500 scale-110 drop-shadow-lg' : 'text-gray-400' %>"
              xmlns="http://www.w3.org/2000/svg"
              fill="<%= ice.isFavorite ? 'currentColor' : 'none' %>"
              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                   2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 
+                   4.5 2.09C13.09 3.81 14.76 3 
+                   16.5 3 19.58 3 22 5.42 
+                   22 8.5c0 3.78-3.4 6.86-8.55 
+                   11.54L12 21.35z"/>
         </svg>
+        <span class="absolute inset-0 rounded-full bg-pink-200 opacity-0 group-hover:opacity-30 blur-lg transition"></span>
       </button>
     </div>
 
@@ -105,6 +113,17 @@
     }, 3000);
   }
 
+  // 🔥 شمارنده علاقه‌مندی‌ها بدون رفرش
+  function updateFavoritesCount(isAdding) {
+    const counter = document.getElementById("favorites-count");
+    if (counter) {
+      let current = parseInt(counter.textContent || "0", 10);
+      current += isAdding ? 1 : -1;
+      if (current < 0) current = 0;
+      counter.textContent = current;
+    }
+  }
+
   favoriteButtons.forEach(button => {
     button.addEventListener("click", async (event) => {
       const btn = event.currentTarget;
@@ -122,15 +141,16 @@
         const data = await res.json();
 
         if (data.success) {
-          // تغییر رنگ قلب فوراً
           if (data.isFavorite) {
-            heart.classList.add("text-red-500");
+            heart.classList.add("text-pink-500", "scale-110", "drop-shadow-lg");
             heart.classList.remove("text-gray-400");
             heart.setAttribute("fill", "currentColor");
+            updateFavoritesCount(true);
           } else {
-            heart.classList.remove("text-red-500");
+            heart.classList.remove("text-pink-500", "scale-110", "drop-shadow-lg");
             heart.classList.add("text-gray-400");
             heart.setAttribute("fill", "none");
+            updateFavoritesCount(false);
           }
           showToast(data.message, "success");
         } else {
