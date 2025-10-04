@@ -5,7 +5,7 @@ dotenv.config();
 
 export const requireAuth = async (req, res, next) => {
   const token = req.cookies.jwt;
-  console.log(" Token from Cookie:", token);
+  console.log(" Token from Cookie:", token); 
 
   if (!token) return res.redirect("/login");
 
@@ -27,7 +27,6 @@ export const requireAuth = async (req, res, next) => {
 };
 
 // cheak user
-
 export const CheakUser = (req, res, next) => {
   const token = req.cookies.jwt;
 
@@ -36,16 +35,23 @@ export const CheakUser = (req, res, next) => {
       jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
         if (err) {
           res.locals.user = null;
+          req.user = null; 
           next();
         } else {
           let user = await User.findById(decodedToken.id);
           res.locals.user = user;
+          req.user = user; 
           next();
         }
       });
     } else {
       res.locals.user = null;
+      req.user = null; 
       next();
     }
-  } catch (error) {}
+  } catch (error) {
+    res.locals.user = null;
+    req.user = null;
+    next();
+  }
 };
