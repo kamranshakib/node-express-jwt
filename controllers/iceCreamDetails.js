@@ -15,7 +15,6 @@ export const showDetails = async (req, res) => {
     
     ice.isFavorite = userFavorites.some(favId => favId.toString() === ice._id.toString());
 
-    console.log("isFavorite for this product:", ice.isFavorite);
 
     res.render("detailsiceCream", { ice });
   } catch (error) {

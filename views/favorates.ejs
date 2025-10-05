@@ -47,8 +47,8 @@
             </p>
 
             <!-- Remove Button -->
-            <form action="/favorites/delete" method="POST" class="mt-auto">
-              <input type="hidden" name="productId" value="<%= product._id %>">
+            <form action="/favorites/delete/<%= product._id %>" method="POST" class="mt-auto">
+              <input type="hidden" name="productId">
               <button 
                 type="submit"
                 class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-xl shadow transition">

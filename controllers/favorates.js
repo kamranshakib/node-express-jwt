@@ -49,23 +49,18 @@ export const get_favorates = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
-
-
-export const favorites_delete = async (req,res)=>{
-
+export const favorites_delete = async (req, res) => {
   try {
-    const { productId } = req.body;
-    console.log("Product ID:", productId);
-
-  
-   
+    const productId = req.params.id;
+    // const { productId } = req.body;
     const user = req.user;
-    if (!user) return res.status(401).json({ message: "Not authenticated" });
+    if (!user) return res.status(401).send("Not authenticated");
 
-    user.favorites = User.favorites.filter(fav => fav.toString() !== productId);
+    user.favorites = user.favorites.filter(fav => fav.toString() !== productId);
     await user.save();
+    res.redirect("/favorates")
 
-    res.redirect("/favorites"); 
+   
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
