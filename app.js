@@ -25,7 +25,6 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs");
 
 // routes
-// app.get("*", requireAuth.CheakUser);
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", requireAuth.requireAuth, async (req, res) => {
   try {
