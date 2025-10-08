@@ -14,7 +14,7 @@ export const adminPage_post = async (req, res) => {
       Flavor: flavor,
       Description: description,
       Price: price,
-      imageUrl
+      imageUrl,
     });
 
     res.redirect("/admin");
@@ -24,49 +24,45 @@ export const adminPage_post = async (req, res) => {
   }
 };
 
-export const adminPage_delete =async (req,res)=>{
-  const id  = req.params.id;
+export const adminPage_delete = async (req, res) => {
+  const id = req.params.id;
   try {
- const delIce = await ICECREAM.findByIdAndDelete(id);
-    res.redirect('/smoothies')
-    
+    const delIce = await ICECREAM.findByIdAndDelete(id);
+    res.redirect("/smoothies");
   } catch (error) {
-    res.status(400).json(error.message)
-    
+    res.status(400).json(error.message);
+  } 
+};
+
+export const adminPage_edit = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const editIce = await ICECREAM.findById(id);
+    if (!editIce) {
+      res.status(404).json({ msg: "that product is not find" });
+    }
+    res.render("editProduct", { editIce });
+  } catch (error) {
+    res.status(404).json(error.message);
   }
+};
 
-}
-
- 
-   export const adminPage_edit = async (req,res)=>{
-    const id = req.params.id;
-    try {
-      const editIce = await ICECREAM.findById(id);
-      if(!editIce){
-        res.status(404).json({msg: "that product is not find"})
-      }
-      res.render('editProduct', { editIce })
-      
-    } catch (error) {
-      res.status(404).json(error.message)
-      
-    } 
-   }
-
-   export const adminPage_edit2 = async (req, res) => {
+export const adminPage_edit2 = async (req, res) => {
   const id = req.params.id;
   try {
     const { name, Flavor, Description, Price } = req.body;
-    
-    let imageUrl = req.body.imageUrl; 
+
+    let imageUrl = req.body.imageUrl;
     if (req.file && req.file.path) {
-      imageUrl = req.file.path; 
+      imageUrl = req.file.path;
     }
 
     const updateData = { name, Flavor, Description, Price, imageUrl };
 
-    const editIces = await ICECREAM.findByIdAndUpdate(id, updateData, { new: true });
-    if (!editIces) return res.send('error');
+    const editIces = await ICECREAM.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+    if (!editIces) return res.send("error");
 
     res.redirect("/smoothies");
   } catch (error) {
