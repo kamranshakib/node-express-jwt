@@ -1,0 +1,56 @@
+<!-- 🛒 Shopping Cart Sidebar -->
+<div id="cart-panel"
+     class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-[60] flex flex-col">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between px-4 py-3 border-b dark:border-gray-700">
+    <h2 class="text-lg font-semibold">Shopping Cart</h2>
+    <button id="close-cart" class="text-gray-600 dark:text-gray-300 hover:text-pink-500 text-2xl">&times;</button>
+  </div>
+
+  <!-- Cart Items -->
+  <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3">
+    <p class="text-gray-500 text-center">Your cart is empty 🛍️</p>
+  </div>
+
+  <!-- Cart Footer -->
+  <div class="border-t dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900">
+    <div class="flex justify-between mb-3">
+      <span class="font-medium">Total:</span>
+      <span id="cart-total" class="font-semibold">$0.00</span>
+    </div>
+    <button id="clear-cart"
+            class="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 rounded-lg transition">
+      Clear Cart
+    </button>
+  </div>
+</div>
+
+<!-- Overlay when cart is open -->
+<div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[50]"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cartPanel = document.getElementById("cart-panel");
+  const cartOverlay = document.getElementById("cart-overlay");
+  const cartBtn = document.querySelector('a[href="/cart"]'); // آیکن کارت در نوار بالا
+  const closeCart = document.getElementById("close-cart");
+
+  // باز کردن کارت
+  cartBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    cartPanel.classList.remove("translate-x-full");
+    cartOverlay.classList.remove("hidden");
+  });
+
+  // بستن کارت
+  closeCart.addEventListener("click", () => {
+    cartPanel.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  });
+  cartOverlay.addEventListener("click", () => {
+    cartPanel.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  });
+});
+</script>
