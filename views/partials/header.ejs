@@ -55,10 +55,6 @@
                        22 8.5c0 3.78-3.4 6.86-8.55 
                        11.54L12 21.35z"/>
             </svg>
-            <span id="favorites-count"
-                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-              <%= favorates?.length || 0 %>
-            </span>
           </a>
         </li>
 
@@ -70,8 +66,6 @@
               <path stroke-linecap="round" stroke-linejoin="round"
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9m-5-9V6a2 2 0 10-4 0v7" />
             </svg>
-            <span id="cart-count"
-                  class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">0</span>
           </a>
         </li>
 
@@ -100,7 +94,7 @@
   </div>
 </nav>
 
-<!-- Overlay -->
+<!-- Overlay for Mobile Menu -->
 <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
 <!-- Mobile Sidebar Menu -->
@@ -111,17 +105,13 @@
     <% if (user) { %><%= user.email %><% } else { %>Guest<% } %>
   </div>
 
-  <% if (user) { %>
   <div class="flex justify-center items-center gap-6 my-4">
     <a href="/favorates" class="relative text-gray-700 dark:text-gray-200 hover:scale-110 transition">
-      ❤️ <span id="favorites-count-mobile"
-               class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-               <%= favorates?.length || 0 %>
-      </span>
+      ❤️
     </a>
   </div>
-  <% } %>
 </div>
+
 <!-- 🛒 Shopping Cart Sidebar -->
 <div id="cart-panel"
      class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-[60] flex flex-col">
@@ -157,32 +147,51 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cartPanel = document.getElementById("cart-panel");
   const cartOverlay = document.getElementById("cart-overlay");
-  const cartBtn = document.querySelector('a[href="/cart"]'); // آیکن کارت در نوار بالا
+  const cartBtn = document.querySelector('a[href="/cart"]'); 
   const closeCart = document.getElementById("close-cart");
+  const clearCartBtn = document.getElementById("clear-cart");
 
-  // باز کردن کارت
-  cartBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+  function openCart() {
     cartPanel.classList.remove("translate-x-full");
     cartOverlay.classList.remove("hidden");
-  });
+  }
+  function closeCartFn() {
+    cartPanel.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  }
 
-  // بستن کارت
-  closeCart.addEventListener("click", () => {
-    cartPanel.classList.add("translate-x-full");
-    cartOverlay.classList.add("hidden");
-  });
-  cartOverlay.addEventListener("click", () => {
-    cartPanel.classList.add("translate-x-full");
-    cartOverlay.classList.add("hidden");
+  cartBtn.addEventListener("click", (e) => { e.preventDefault(); openCart(); });
+  closeCart.addEventListener("click", closeCartFn);
+  cartOverlay.addEventListener("click", closeCartFn);
+
+  // Clear Cart
+  clearCartBtn.addEventListener("click", () => {
+    const cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = '<p class="text-gray-500 text-center">Your cart is empty 🛍️</p>';
+    document.getElementById("cart-total").textContent = "$0.00";
   });
 });
 </script>
 
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav');
+  let lastScroll = 0;
 
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > lastScroll) {
+      // Scroll Down -> hide nav
+      nav.classList.add('-translate-y-full');
+      nav.classList.add('transition-transform', 'duration-300');
+    } else {
+      // Scroll Up -> show nav
+      nav.classList.remove('-translate-y-full');
+    }
+    lastScroll = currentScroll;
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const overlay = document.getElementById('overlay');
@@ -198,45 +207,12 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.classList.add('hidden');
     });
 
-   
     darkToggle.addEventListener('click', () => {
       html.classList.toggle('dark');
       localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
     });
     if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
-
-    // ========================
-    // =========================
-    function updateFavCountDisplay() {
-      const favCount = localStorage.getItem('favoritesCount') || "<%= favorates?.length || 0 %>";
-      const favEl = document.getElementById("favorites-count");
-      const favElMobile = document.getElementById("favorites-count-mobile");
-      if (favEl) favEl.innerText = favCount;
-      if (favElMobile) favElMobile.innerText = favCount;
-    }
-
-    updateFavCountDisplay();
-
-    window.toggleFavorite = async function(productId) {
-      try {
-        const res = await fetch('/toggleFavorite', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ productId })
-        });
-
-        const data = await res.json();
-        if (!data.success) return alert(data.message);
-
-        let current = parseInt(localStorage.getItem('favoritesCount') || "<%= favorates?.length || 0 %>");
-        const newCount = data.isFavorite ? current + 1 : Math.max(current - 1, 0);
-        localStorage.setItem('favoritesCount', newCount);
-
-        updateFavCountDisplay();
-      } catch(e) { console.error(e); }
-    };
-
-  }); // DOMContentLoaded
+});
 </script>
 
 </body>

@@ -1,8 +1,8 @@
 import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-dotenv.config(); 
- 
+dotenv.config();
+
 // jsonwebtoekn function
 const maxAge = 20 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -18,7 +18,7 @@ const ErrorHundle = (err) => {
   if (err.message === "incorrect password") {
     errors.password = " that password is incorrect";
   }
- 
+
   if (err.message === "incorrect email") {
     errors.email = " That email is not registered";
   }
@@ -37,13 +37,13 @@ const ErrorHundle = (err) => {
 };
 
 export const login = (req, res) => {
-  res.render("login"); 
+  res.render("login");
 };
 
-export const signup = (req, res) => { 
+export const signup = (req, res) => {
   res.render("signup");
-};  
- 
+};
+
 export const login_post = async (req, res) => {
   const { email, password } = req.body;
 
@@ -53,14 +53,14 @@ export const login_post = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-         expires: new Date(Date.now() + maxAge * 1000),
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      expires: new Date(Date.now() + maxAge * 1000),
     });
     res.status(200).json({ user: user._id });
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(400).json({ errors });
-  } 
+  }
 };
 export const signup_post = async (req, res) => {
   try {
@@ -68,12 +68,13 @@ export const signup_post = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ errors: { email: "This email is already registered!" } });
+      return res
+        .status(400)
+        .json({ errors: { email: "This email is already registered!" } });
     }
 
     const newUser = await User.create({ email, password });
 
-   
     const token = createToken(newUser._id);
     res.cookie("jwt", token, {
       httpOnly: true,
@@ -83,7 +84,6 @@ export const signup_post = async (req, res) => {
     });
 
     res.status(200).json({ user: newUser._id });
-    
   } catch (err) {
     const errors = ErrorHundle(err);
     res.status(500).json({ errors });
@@ -99,5 +99,3 @@ export const logout = (req, res) => {
   });
   res.redirect("/");
 };
-
- 

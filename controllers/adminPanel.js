@@ -31,7 +31,7 @@ export const adminPage_delete = async (req, res) => {
     res.redirect("/smoothies");
   } catch (error) {
     res.status(400).json(error.message);
-  } 
+  }
 };
 
 export const adminPage_edit = async (req, res) => {
