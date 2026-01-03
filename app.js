@@ -9,7 +9,7 @@ import * as favorates from "./middleware/favoratesMidd.js";
 
 const app = express();
 
-// middleware 
+// middleware
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
@@ -34,7 +34,7 @@ app.get("/smoothies", requireAuth.requireAuth, async (req, res) => {
     res.status(400).json({ error });
   }
 });
-app.use(authRoutes);  
+app.use(authRoutes);
 
 app.listen(3000, () => {
   console.log("localhost 3000");
