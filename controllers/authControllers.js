@@ -3,13 +3,11 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-// jsonwebtoekn function
 const maxAge = 20 * 24 * 60 * 60;
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge });
 };
 
-// error hundling function
 const ErrorHundle = (err) => {
   console.log(err.message, err.code);
 
