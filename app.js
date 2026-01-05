@@ -6,10 +6,10 @@ import User from "./Model/user.js";
 import ICECREAM from "./Model/Model_ice.js";
 import authRoutes from "./routes/authRoutes.js";
 
-const app = express();
+const app = express(); 
 
 // middleware 
-app.use(express.static("public"));
+app.use(express.static("public")); 
 app.use(express.json());
 app.use(cookieParser());
 
