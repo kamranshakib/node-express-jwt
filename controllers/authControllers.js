@@ -61,7 +61,7 @@ export const login_post = async (req, res) => {
   }
 };
 export const signup_post = async (req, res) => {
-  try {
+  try { 
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });

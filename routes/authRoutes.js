@@ -2,9 +2,7 @@ import express from "express";
 import upload from "../confiq/upload.js";
 import * as authControllers from "../controllers/authControllers.js";
 import * as adminPanel from "../controllers/adminPanel.js";
-import * as detailsIceCream from "../controllers/iceCreamDetails.js";
 import * as requireAdmin from "../middleware/authAdmin.js";
-import * as favorate from "../controllers/favorates.js"
 import * as requireAuth  from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -25,13 +23,7 @@ router.post('/adminPage_edit2/:id',upload.single("image"),adminPanel.adminPage_e
 
 
 // ice creams details
-router.get("/icecream/:id",requireAuth.requireAuth, detailsIceCream.showDetails);
+// router.get("/icecream/:id",requireAuth.requireAuth, detailsIceCream.showDetails);
 
-
-
-// Favorates (toggle)
-router.post("/favorites/add", requireAuth.requireAuth,detailsIceCream.toggleFavorite );
-router.get('/favorates',requireAuth.requireAuth,favorate.get_favorates)
-router.post('/favorites/delete/:id',requireAuth.requireAuth,favorate.favorites_delete)
 
 export default router;

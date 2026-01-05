@@ -5,17 +5,15 @@ import * as requireAuth from "./middleware/authMiddleware.js";
 import User from "./Model/user.js";
 import ICECREAM from "./Model/Model_ice.js";
 import authRoutes from "./routes/authRoutes.js";
-import * as favorates from "./middleware/favoratesMidd.js";
 
 const app = express();
 
-// middleware
+// middleware 
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(requireAuth.CheakUser);
-app.use(favorates.setFavorites);
 
 app.use((req, res, next) => {
   console.log(" Current User: ", req.user);
@@ -39,3 +37,4 @@ app.use(authRoutes);
 app.listen(3000, () => {
   console.log("localhost 3000");
 });
+ 
